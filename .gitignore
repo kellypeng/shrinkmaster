@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.thumbnails/
+temp_downloads/
+stitch_exports/
+*.tgz
+*.tar.gz
+.DS_Store
+.claude/
+.codex/
+/bin/ffmpeg
+/bin/ffprobe
+/bin/7zz
+/tmp/
