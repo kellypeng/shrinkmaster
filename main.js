@@ -429,6 +429,47 @@ ipcMain.handle('cancel-compress', async () => {
 // IPC: Reveal a file/folder in Finder
 // ========================
 const { shell } = require('electron');
+// ========================
+// IPC: Save-as — copy a compressed file to a user-chosen location
+// ========================
+ipcMain.handle('save-as', async (event, { sourcePath, suggestedName }) => {
+  console.log('[MAIN][IPC] save-as:', sourcePath, '->', suggestedName);
+  if (!sourcePath || !fs.existsSync(sourcePath)) {
+    return { success: false, error: 'Source file not found. Try compressing again.' };
+  }
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: 'Save compressed video',
+    defaultPath: suggestedName || path.basename(sourcePath),
+    buttonLabel: 'Save',
+  });
+  if (result.canceled || !result.filePath) {
+    return { success: false, canceled: true };
+  }
+  try {
+    fs.copyFileSync(sourcePath, result.filePath);
+    const { shell } = require('electron');
+    shell.showItemInFolder(result.filePath);
+    return { success: true, savedPath: result.filePath };
+  } catch (err) {
+    console.error('[MAIN][IPC] save-as copy failed:', err.message);
+    return { success: false, error: err.message };
+  }
+});
+
+ipcMain.handle('get-locale', async () => {
+  // Returns BCP-47 tag, e.g. "en-US", "zh-CN", "zh-TW"
+  return app.getLocale() || 'en-US';
+});
+
+ipcMain.handle('stat-path', async (event, p) => {
+  try {
+    const s = fs.statSync(p);
+    return { size: s.size, isFile: s.isFile() };
+  } catch (err) {
+    return { error: err.message };
+  }
+});
+
 ipcMain.handle('reveal-in-folder', async (event, targetPath) => {
   console.log('[MAIN][IPC] reveal-in-folder:', targetPath);
   try {

@@ -259,7 +259,7 @@
     }
 
     body.drag-over::after {
-      content: "Drop to add videos";
+      content: attr(data-drop-overlay);
       position: fixed;
       inset: 0;
       background: rgba(22, 101, 232, 0.12);
@@ -1123,11 +1123,11 @@
           </svg>
         </div>
         <div class="brand-name">Shrink<span class="brand-accent">Master</span></div>
-        <div class="plan-badge">Desktop App</div>
+        <div class="plan-badge" data-i18n="brand.badge">Desktop App</div>
       </div>
       <div class="header-actions">
-        <button id="addVideosBtn" class="btn btn-files" type="button">Select Files</button>
-        <button id="advancedToggleBtn" class="btn-link" type="button">Advanced Settings</button>
+        <button id="addVideosBtn" class="btn btn-files" type="button" data-i18n="header.selectFiles">Select Files</button>
+        <button id="advancedToggleBtn" class="btn-link" type="button" data-i18n="header.advancedSettings">Advanced Settings</button>
       </div>
     </div>
   </header>
@@ -1135,7 +1135,7 @@
   <main class="app-main">
     <section id="homeScreen" class="screen-home">
       <div id="uploadSurface" class="upload-box">
-        <div class="eyebrow-chip">Shrink Faster, Stay Crisp</div>
+        <div class="eyebrow-chip" data-i18n="home.tagline">Shrink Faster, Stay Crisp</div>
         <div class="upload-icon" aria-hidden="true">
           <svg class="brand-mark lg" viewBox="0 0 32 32" role="img" aria-label="ShrinkMaster upload logo">
             <path class="mark-stroke" d="M10 7.5v6.2"></path>
@@ -1147,13 +1147,13 @@
             <path class="mark-core" d="M13 20.5h6"></path>
           </svg>
         </div>
-        <h2>Drag and drop files here</h2>
-        <p>Select files to start shrinking instantly</p>
-        <button class="btn btn-files" type="button">Select Files</button>
+        <h2 data-i18n="home.dropPrompt">Drag and drop files here</h2>
+        <p data-i18n="home.dropSub">Select files to start shrinking instantly</p>
+        <button class="btn btn-files" type="button" data-i18n="header.selectFiles">Select Files</button>
         <div class="upload-meta">
-          <span>Local-only processing</span>
-          <span>Single or batch compression</span>
-          <span>Ready in seconds</span>
+          <span data-i18n="home.metaLocal">Local-only processing</span>
+          <span data-i18n="home.metaBatch">Single or batch compression</span>
+          <span data-i18n="home.metaReady">Ready in seconds</span>
         </div>
       </div>
     </section>
@@ -1168,32 +1168,32 @@
             </svg>
             <div class="ring-center">
               <b id="singlePercent">0%</b>
-              <span>Compressing...</span>
+              <span data-i18n="single.ringLabel">Compressing...</span>
             </div>
           </div>
-          <div class="single-title">Optimizing video pixels without quality loss...</div>
-          <div class="single-badge">Typical reduction: 70-90%</div>
-          <p class="single-desc">Hang tight — re-encoding your video with a modern codec to shrink the file while keeping it clear.</p>
-          <div id="singleFileName" class="single-file">No file selected</div>
-          <button id="singleCancelBtn" class="btn-cancel" type="button">Cancel Processing</button>
+          <div class="single-title" data-i18n="single.title">Optimizing video pixels without quality loss...</div>
+          <div class="single-badge" data-i18n="single.badge">Typical reduction: 70-90%</div>
+          <p class="single-desc" data-i18n="single.desc">Hang tight — re-encoding your video with a modern codec to shrink the file while keeping it clear.</p>
+          <div id="singleFileName" class="single-file" data-i18n="single.noFile">No file selected</div>
+          <button id="singleCancelBtn" class="btn-cancel" type="button" data-i18n="single.cancel">Cancel Processing</button>
         </div>
 
         <div class="feature-grid">
           <div class="feature-card">
-            <b>Ultra Fast</b>
-            <p>Leveraging GPU acceleration for maximum speed.</p>
+            <b data-i18n="feat.fastTitle">Ultra Fast</b>
+            <p data-i18n="feat.fastDesc">Leveraging GPU acceleration for maximum speed.</p>
           </div>
           <div class="feature-card">
-            <b>Secure</b>
-            <p>Files are processed on your device — nothing is uploaded.</p>
+            <b data-i18n="feat.secureTitle">Secure</b>
+            <p data-i18n="feat.secureDesc">Files are processed on your device — nothing is uploaded.</p>
           </div>
           <div class="feature-card">
-            <b>HD Quality</b>
-            <p>Modern codecs (H.265 / AV1) keep quality high at a fraction of the size.</p>
+            <b data-i18n="feat.hdTitle">HD Quality</b>
+            <p data-i18n="feat.hdDesc">Modern codecs (H.265 / AV1) keep quality high at a fraction of the size.</p>
           </div>
         </div>
 
-        <div class="copyright">(c) 2026 ShrinkMaster. 100% local processing.</div>
+        <div class="copyright" data-i18n="footer.copyright">(c) 2026 ShrinkMaster. 100% local processing.</div>
       </div>
     </section>
 
@@ -1201,67 +1201,67 @@
       <div class="batch-layout">
         <div class="batch-card">
           <div class="batch-head">
-            <h3>Processing Queue</h3>
+            <h3 data-i18n="batch.queueTitle">Processing Queue</h3>
             <span id="batchQueueCount">0 Files</span>
           </div>
           <div id="batchQueueList" class="queue-list"></div>
           <div class="batch-actions">
-            <button id="addMoreFilesBtn" class="btn btn-files" type="button">+ Add More Files</button>
-            <button id="cancelAllBtn" class="btn btn-ghost" type="button">Cancel All</button>
+            <button id="addMoreFilesBtn" class="btn btn-files" type="button" data-i18n="batch.addMore">+ Add More Files</button>
+            <button id="cancelAllBtn" class="btn btn-ghost" type="button" data-i18n="batch.cancelAll">Cancel All</button>
           </div>
         </div>
 
         <div class="feature-grid">
           <div class="feature-card">
-            <b>Ultra Fast</b>
-            <p>Leveraging GPU acceleration for maximum speed.</p>
+            <b data-i18n="feat.fastTitle">Ultra Fast</b>
+            <p data-i18n="feat.fastDesc">Leveraging GPU acceleration for maximum speed.</p>
           </div>
           <div class="feature-card">
-            <b>Secure</b>
-            <p>Files are processed on your device — nothing is uploaded.</p>
+            <b data-i18n="feat.secureTitle">Secure</b>
+            <p data-i18n="feat.secureDesc">Files are processed on your device — nothing is uploaded.</p>
           </div>
           <div class="feature-card">
-            <b>HD Quality</b>
-            <p>Modern codecs (H.265 / AV1) keep quality high at a fraction of the size.</p>
+            <b data-i18n="feat.hdTitle">HD Quality</b>
+            <p data-i18n="feat.hdDesc">Modern codecs (H.265 / AV1) keep quality high at a fraction of the size.</p>
           </div>
         </div>
 
-        <div class="copyright">(c) 2026 ShrinkMaster. 100% local processing.</div>
+        <div class="copyright" data-i18n="footer.copyright">(c) 2026 ShrinkMaster. 100% local processing.</div>
       </div>
     </section>
 
     <section id="singleResultScreen" class="mode-screen hidden">
       <div class="result-layout">
         <div class="result-head">
-          <div class="result-check">OK</div>
-          <h2>Compression Complete!</h2>
-          <div class="result-sub">Your file is ready and optimized for sharing.</div>
+          <div class="result-check" data-i18n="result.checkMark">OK</div>
+          <h2 data-i18n="result.title">Compression Complete!</h2>
+          <div class="result-sub" data-i18n="result.sub">Your file is ready and optimized for sharing.</div>
           <div id="singleResultSavedLabel" class="result-pill">Saved 90% Space!</div>
         </div>
 
         <div class="single-result-cards">
           <div class="result-file-card">
-            <div class="result-file-thumb">Original</div>
-            <div class="result-file-label">Original</div>
+            <div class="result-file-thumb" data-i18n="result.original">Original</div>
+            <div class="result-file-label" data-i18n="result.original">Original</div>
             <div id="singleResultOriginalSize" class="result-file-size">--</div>
           </div>
           <div class="result-file-card" style="border-color:#8ab2ef;">
-            <div class="result-file-thumb">Compressed</div>
-            <div class="result-file-label" style="color:#1665e8;">Compressed</div>
+            <div class="result-file-thumb" data-i18n="result.compressed">Compressed</div>
+            <div class="result-file-label" style="color:#1665e8;" data-i18n="result.compressed">Compressed</div>
             <div id="singleResultCompressedSize" class="result-file-size">--</div>
             <div id="singleResultSavedText" class="result-file-note">--</div>
           </div>
         </div>
 
         <div class="single-result-actions">
-          <button id="saveToFolderBtn" class="result-btn primary" type="button">Save to Folder</button>
-          <button id="singleCompressAnotherBtn" class="result-btn secondary" type="button">Compress Another File</button>
+          <button id="saveToFolderBtn" class="result-btn primary" type="button" data-i18n="result.saveAs">Save As...</button>
+          <button id="singleCompressAnotherBtn" class="result-btn secondary" type="button" data-i18n="result.compressAnother">Compress Another File</button>
         </div>
 
         <div class="result-footer">
-          <span>Secure AES-256</span>
-          <span>Saved in history</span>
-          <span>Cloud Sync Active</span>
+          <span data-i18n="result.footer1">100% Local</span>
+          <span data-i18n="result.footer2">No Upload</span>
+          <span data-i18n="result.footer3">Hardware Accelerated</span>
         </div>
       </div>
     </section>
@@ -1269,8 +1269,8 @@
     <section id="batchResultScreen" class="mode-screen hidden">
       <div class="result-layout">
         <div class="result-head">
-          <div class="result-check">OK</div>
-          <h2>Compression Complete</h2>
+          <div class="result-check" data-i18n="result.checkMark">OK</div>
+          <h2 data-i18n="result.titleBatch">Compression Complete</h2>
           <div id="batchResultCount" class="result-sub">Your files are ready and optimized for sharing.</div>
           <div id="batchResultSavedLabel" class="result-pill">Total Saved: --</div>
         </div>
@@ -1279,13 +1279,13 @@
         <div id="batchResultMoreFiles" class="batch-more hidden">+ 0 more files</div>
 
         <div class="single-result-actions" style="grid-template-columns:1fr;">
-          <button id="batchDownloadBtn" class="result-btn primary" type="button">Show in Finder</button>
+          <button id="batchDownloadBtn" class="result-btn primary" type="button" data-i18n="result.showInFinder">Show in Finder</button>
         </div>
 
         <div class="result-footer">
-          <span>Secure AES-256</span>
-          <span>Saved in history</span>
-          <span>Cloud Sync Active</span>
+          <span data-i18n="result.footer1">100% Local</span>
+          <span data-i18n="result.footer2">No Upload</span>
+          <span data-i18n="result.footer3">Hardware Accelerated</span>
         </div>
       </div>
     </section>
@@ -1295,32 +1295,41 @@
   <div id="panelOverlay" class="panel-overlay"></div>
   <aside id="advancedPanel" class="advanced-panel" aria-hidden="true">
     <div class="panel-head">
-      <h4>Advanced Settings</h4>
-      <button id="advancedCloseBtn" class="btn-link" type="button">Close</button>
+      <h4 data-i18n="adv.title">Advanced Settings</h4>
+      <button id="advancedCloseBtn" class="btn-link" type="button" data-i18n="adv.close">Close</button>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <label>Output Folder</label>
+        <label data-i18n="adv.language">Language</label>
+        <select id="languageSelect">
+          <option value="auto" data-i18n="adv.langAuto">Auto (System)</option>
+          <option value="en">English</option>
+          <option value="zh-CN">简体中文</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="adv.outputFolder">Output Folder</label>
         <div class="input-row">
-          <input type="text" id="outputFolder" value="" placeholder="Choose output folder" />
-          <button id="browseOutputBtn" class="btn-sm" type="button">Browse</button>
+          <input type="text" id="outputFolder" value="" data-i18n-placeholder="adv.outputPlaceholder" placeholder="Choose output folder" />
+          <button id="browseOutputBtn" class="btn-sm" type="button" data-i18n="adv.browse">Browse</button>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Codec</label>
+        <label data-i18n="adv.codec">Codec</label>
         <select id="codecSelect">
-          <option value="h265" selected>H.265 (HEVC) - Fast and Compatible</option>
-          <option value="av1">AV1 - Smaller Files</option>
+          <option value="h265" selected data-i18n="adv.codecH265">H.265 (HEVC) - Fast and Compatible</option>
+          <option value="av1" data-i18n="adv.codecAv1">AV1 - Smaller Files</option>
         </select>
       </div>
 
       <div id="encoderNotices" class="notice"></div>
 
       <div class="form-group">
-        <label>Resolution</label>
+        <label data-i18n="adv.resolution">Resolution</label>
         <select id="resolutionSelect">
-          <option value="">Original (No resize)</option>
+          <option value="" data-i18n="adv.resOriginal">Original (No resize)</option>
           <option value="3840:-2">4K (3840x...)</option>
           <option value="2560:-2">1440p (2560x...)</option>
           <option value="1920:-2" selected>1080p (1920x...)</option>
@@ -1330,19 +1339,19 @@
 
       <div class="slider">
         <div class="slider-head">
-          <label>Quality (CRF)</label>
+          <label data-i18n="adv.crf">Quality (CRF)</label>
           <b id="crfValue">28</b>
         </div>
         <input type="range" id="crfSlider" min="0" max="51" value="28" />
         <div class="slider-labels">
-          <span>0 (lossless)</span>
-          <span>51 (worst)</span>
+          <span data-i18n="adv.crfLow">0 (lossless)</span>
+          <span data-i18n="adv.crfHigh">51 (worst)</span>
         </div>
       </div>
 
       <div class="slider">
         <div class="slider-head">
-          <label>Speed Preset</label>
+          <label data-i18n="adv.preset">Speed Preset</label>
           <b id="presetValue">medium</b>
         </div>
         <input type="range" id="presetSlider" min="0" max="8" value="5" />
@@ -1353,12 +1362,12 @@
       </div>
 
       <div class="panel-actions">
-        <button id="compressBtn" class="btn btn-files" type="button">Compress Now</button>
-        <div id="status" class="status">Ready - select files to begin</div>
+        <button id="compressBtn" class="btn btn-files" type="button" data-i18n="adv.compressNow">Compress Now</button>
+        <div id="status" class="status" data-i18n="status.ready">Ready - select files to begin</div>
       </div>
 
       <details>
-        <summary>Activity Log</summary>
+        <summary data-i18n="adv.log">Activity Log</summary>
         <div id="logPanel"></div>
       </details>
     </div>

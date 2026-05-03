@@ -1,5 +1,4 @@
 const { contextBridge, ipcRenderer, webUtils } = require('electron');
-const fs = require('fs');
 
 console.log('[PRELOAD] Preload script loaded');
 
@@ -14,14 +13,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
         }
     },
     // Stat a path (used to get file size for drag-dropped files)
-    statPath: (p) => {
-        try {
-            const s = fs.statSync(p);
-            return { size: s.size, isFile: s.isFile() };
-        } catch (err) {
-            return { error: err.message };
-        }
-    },
+    // NOTE: preload runs sandboxed — fs is not available here, so we go through IPC.
+    statPath: (p) => ipcRenderer.invoke('stat-path', p),
     // File dialog
     openFileDialog: () => {
         console.log('[PRELOAD] openFileDialog() called');
@@ -50,6 +43,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
         console.log('[PRELOAD] revealInFolder() called for:', targetPath);
         return ipcRenderer.invoke('reveal-in-folder', targetPath);
     },
+    saveAs: (sourcePath, suggestedName) => {
+        console.log('[PRELOAD] saveAs() called:', sourcePath);
+        return ipcRenderer.invoke('save-as', { sourcePath, suggestedName });
+    },
+    getLocale: () => ipcRenderer.invoke('get-locale'),
     // Duration
     getDuration: (filePath) => {
         console.log('[PRELOAD] getDuration() called with:', filePath);
