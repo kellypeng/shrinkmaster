@@ -12,3 +12,6 @@ stitch_exports/
 /bin/ffprobe
 /bin/7zz
 /tmp/
+
+# Icon build intermediate (icon.icns is committed; the iconset is regenerable)
+/build/icon.iconset/

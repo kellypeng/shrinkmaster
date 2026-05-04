@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShrinkMaster — Shrink videos locally, fast</title>
+  <meta name="description" content="Local-only desktop app for shrinking videos. H.265 / AV1 via ffmpeg, hardware-accelerated, bilingual EN/中文. macOS universal." />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #dbe3ee;
+      --primary: #1665e8;
+      --primary-700: #1455be;
+      --shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: Inter, "PingFang SC", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(680px 280px at 8% 5%, rgba(22, 101, 232, 0.12), transparent 70%),
+        radial-gradient(560px 260px at 95% 95%, rgba(22, 101, 232, 0.08), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      font-size: 1.6rem;
+      line-height: 1.55;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      padding: 22px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, #1e6cff 0%, #1455be 100%);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(22, 101, 232, 0.28);
+    }
+    .brand-name { font-size: 2rem; font-weight: 800; letter-spacing: -0.01em; }
+    .brand-name b { color: var(--primary); font-weight: 800; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--primary); }
+
+    section.hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(22, 101, 232, 0.1);
+      color: var(--primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: clamp(3.6rem, 6vw, 5.6rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    h1 .accent { color: var(--primary); }
+    .lede {
+      font-size: 1.95rem;
+      color: var(--muted);
+      max-width: 660px;
+      margin: 0 auto 36px;
+    }
+
+    .download-row {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #2f7df6);
+      color: #fff;
+      font-size: 1.85rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 14px 30px rgba(22, 101, 232, 0.34);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .download-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(22, 101, 232, 0.42);
+    }
+    .download-meta {
+      font-size: 1.3rem;
+      color: var(--muted);
+    }
+
+    .hero-shot {
+      max-width: 920px;
+      width: 100%;
+      margin: 56px auto 0;
+      border-radius: 18px;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+      border: 1px solid var(--border);
+      background: linear-gradient(120deg, #ecf2fa, #dbe7f6);
+      aspect-ratio: 16 / 10;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .hero-shot img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
+
+    section.features {
+      padding: 80px 0;
+    }
+    .section-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-head h2 {
+      font-size: 3.2rem;
+      letter-spacing: -0.025em;
+    }
+    .section-head p {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1.65rem;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+    .feature-card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(22, 101, 232, 0.1);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .feature-card b {
+      display: block;
+      font-size: 1.85rem;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 1.45rem;
+    }
+
+    section.firstrun {
+      padding: 60px 0 80px;
+    }
+    .firstrun-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .firstrun-card h3 {
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .firstrun-card .sub {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .firstrun-steps {
+      display: grid;
+      gap: 14px;
+      counter-reset: step;
+    }
+    .firstrun-steps li {
+      list-style: none;
+      padding-left: 50px;
+      position: relative;
+      font-size: 1.6rem;
+    }
+    .firstrun-steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: -2px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+    code {
+      background: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.92em;
+      border: 1px solid var(--border);
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 1.4rem;
+      margin-top: 18px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.35rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    @media (max-width: 760px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .hero { padding: 50px 0 30px; }
+      .firstrun-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 7.5v6.2"/>
+              <path d="M7.2 10.3 10 7.5l2.8 2.8"/>
+              <path d="M22 24.5v-6.2"/>
+              <path d="M19.2 21.7 22 24.5l2.8-2.8"/>
+              <path d="M8 14.5h16" stroke-width="2.6"/>
+              <path d="M10.5 17.5h11" stroke-width="2.6"/>
+              <path d="M13 20.5h6" stroke-width="2.6"/>
+            </svg>
+          </div>
+          <div class="brand-name">Shrink<b>Master</b></div>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#features">Features</a>
+          <a class="nav-link" href="#firstrun">First run</a>
+          <a class="nav-link" href="https://github.com/kellypeng/shrinkmaster">GitHub</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="eyebrow">100% local · No upload · Free</div>
+        <h1>Shrink videos. <span class="accent">Stay crisp.</span></h1>
+        <p class="lede">A tiny desktop app that re-encodes your videos with H.265 or AV1 and hardware acceleration. Drag, drop, save 70-90% of the file size — and nothing leaves your machine.</p>
+        <div class="download-row">
+          <a class="download-btn" href="https://github.com/kellypeng/shrinkmaster/releases/latest" rel="noopener">
+            <svg viewBox="0 0 16 16" width="22" height="22" fill="currentColor"><path d="M11.182.18a.75.75 0 0 0-1.014-.106L6 4.318V.75a.75.75 0 0 0-1.5 0v3.568L.832.074A.75.75 0 0 0 .18 1.182L4.318 6H.75a.75.75 0 0 0 0 1.5h3.568L.074 11.832a.75.75 0 0 0 1.108.992L4.5 9.682v3.568a.75.75 0 0 0 1.5 0V9.682l3.318 4.142a.75.75 0 0 0 1.108-.992L6.682 9.5h3.568a.75.75 0 0 0 0-1.5H6.682l4.5-4.318a.75.75 0 0 0 .000-1.502z" transform="rotate(45 8 8) scale(0.85)"/></svg>
+            Download for macOS
+          </a>
+          <div class="download-meta">Universal · macOS 11+ · Free · Open source</div>
+        </div>
+        <div class="hero-shot">
+          <!-- Replace this placeholder with: <img src="screenshot.png" alt="ShrinkMaster home screen" /> -->
+          <span>App screenshot goes here</span>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>Built for getting it done</h2>
+        <p>Three things, well.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">100%</div>
+          <b>Local processing</b>
+          <p>Your videos never leave the device. No cloud, no telemetry, no account.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">⚡</div>
+          <b>Hardware accelerated</b>
+          <p>Uses VideoToolbox on Mac, NVENC / QSV / AMF where available. Auto-detected at startup.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🌐</div>
+          <b>Bilingual</b>
+          <p>English and 简体中文, follows your system language. Switch any time in Advanced Settings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="firstrun" id="firstrun">
+    <div class="container">
+      <div class="firstrun-card">
+        <h3>Opening on macOS for the first time</h3>
+        <p class="sub">ShrinkMaster isn't yet signed with an Apple Developer ID, so macOS will block the first launch. One-time workaround:</p>
+        <ol class="firstrun-steps">
+          <li>Drag <code>ShrinkMaster.app</code> into your <strong>Applications</strong> folder</li>
+          <li><strong>Right-click</strong> the app, choose <strong>Open</strong> (don't double-click yet)</li>
+          <li>Click <strong>Open</strong> in the dialog macOS shows</li>
+        </ol>
+        <p style="margin-top:18px; color: var(--muted); font-size: 1.4rem;">After that, it opens normally. If macOS still refuses, run this in Terminal:</p>
+        <pre>xattr -cr /Applications/ShrinkMaster.app</pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>ShrinkMaster · 100% local · <a href="https://github.com/kellypeng/shrinkmaster">Source on GitHub</a> · <a href="https://github.com/kellypeng/shrinkmaster/releases">All releases</a></p>
+    </div>
+  </footer>
+</body>
+</html>

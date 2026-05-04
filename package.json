@@ -1,6 +1,6 @@
 {
   "name": "shrinkmaster",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ShrinkMaster — local-only desktop app for shrinking videos with ffmpeg",
   "main": "main.js",
   "scripts": {
@@ -26,11 +26,13 @@
     ],
     "mac": {
       "target": [
-        { "target": "dmg", "arch": ["x64", "arm64"] },
-        { "target": "zip", "arch": ["x64", "arm64"] }
+        { "target": "dmg", "arch": ["universal"] },
+        { "target": "zip", "arch": ["universal"] }
       ],
       "category": "public.app-category.video",
-      "hardenedRuntime": true,
+      "icon": "build/icon.icns",
+      "identity": null,
+      "hardenedRuntime": false,
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist"
