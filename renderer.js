@@ -111,6 +111,28 @@ const I18N = {
     'enc.detectedCpu': 'Detected CPU: {model}',
     'enc.hwAccel': '[OK] HW Accelerated: {label}',
     'enc.cpuOnly': '[INFO] {label}',
+
+    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by @kellyyuweipeng. Got feedback?',
+    'welcome.action': 'Find me on Twitter →',
+
+    'footer.localOnly': '100% local · open source',
+    'footer.madeBy': 'Made by @kellyyuweipeng',
+    'footer.star': 'Star on GitHub',
+
+    'result.share': '📤 Share Result',
+    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+
+    'about.greeting': "Hi, I'm Kelly 👋",
+    'about.body': "ShrinkMaster is a free, open-source side project. If it's been useful, a Star or follow on Twitter means a lot.",
+    'about.followTwitter': 'Follow @kellyyuweipeng',
+    'about.star': 'Star on GitHub',
+    'about.versionPrefix': 'Version',
+    'about.checkUpdate': 'Check for updates',
+    'about.checking': 'Checking…',
+    'about.upToDate': "· You're on the latest version",
+    'about.updateAvailable': '· {tag} is available →',
+    'about.checkFailed': '· Check failed: {err}',
   },
   'zh-CN': {
     'brand.badge': '桌面应用',
@@ -218,6 +240,28 @@ const I18N = {
     'enc.detectedCpu': '检测到 CPU：{model}',
     'enc.hwAccel': '[已启用] 硬件加速：{label}',
     'enc.cpuOnly': '[提示] {label}',
+
+    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 @kellyyuweipeng 制作的开源副业项目。有反馈或建议？',
+    'welcome.action': '在推特上找我 →',
+
+    'footer.localOnly': '100% 本地 · 开源',
+    'footer.madeBy': '由 @kellyyuweipeng 制作',
+    'footer.star': '在 GitHub 上点 Star',
+
+    'result.share': '📤 分享结果',
+    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+
+    'about.greeting': '你好，我是 Kelly 👋',
+    'about.body': 'ShrinkMaster 是我做的一个免费开源副业项目。如果它对你有用，欢迎 Star 项目或在推特上关注我。',
+    'about.followTwitter': '关注 @kellyyuweipeng',
+    'about.star': '给项目点 Star',
+    'about.versionPrefix': '版本',
+    'about.checkUpdate': '检查更新',
+    'about.checking': '检查中…',
+    'about.upToDate': '· 已是最新版本',
+    'about.updateAvailable': '· {tag} 已发布 →',
+    'about.checkFailed': '· 检查失败：{err}',
   },
 };
 
@@ -314,6 +358,15 @@ const statusEl = document.getElementById('status');
 const logPanel = document.getElementById('logPanel');
 
 const languageSelect = document.getElementById('languageSelect');
+const singleShareBtn = document.getElementById('singleShareBtn');
+const batchShareBtn = document.getElementById('batchShareBtn');
+const welcomeBanner = document.getElementById('welcomeBanner');
+const welcomeBannerAction = document.getElementById('welcomeBannerAction');
+const welcomeBannerClose = document.getElementById('welcomeBannerClose');
+const aboutVersion = document.getElementById('aboutVersion');
+const aboutCheckUpdate = document.getElementById('aboutCheckUpdate');
+const aboutUpdateResult = document.getElementById('aboutUpdateResult');
+
 const codecSelect = document.getElementById('codecSelect');
 const encoderNotices = document.getElementById('encoderNotices');
 const resolutionSelect = document.getElementById('resolutionSelect');
@@ -1100,6 +1153,132 @@ window.electronAPI.onTestAutoCompress(() => {
 });
 
 // ========================
+// External links + share
+// ========================
+const LINKS = {
+  twitter: 'https://twitter.com/kellyyuweipeng',
+  github: 'https://github.com/kellypeng/shrinkmaster',
+};
+
+function openLink(url) {
+  if (window.electronAPI && window.electronAPI.openExternal) {
+    window.electronAPI.openExternal(url);
+  }
+}
+
+// Wire any element with [data-href="twitter"] / [data-href="github"]
+function wireFooterLinks() {
+  document.querySelectorAll('[data-href]').forEach((el) => {
+    const key = el.getAttribute('data-href');
+    if (LINKS[key]) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => { e.preventDefault(); openLink(LINKS[key]); });
+    }
+  });
+}
+
+function tweetUrl(text) {
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+}
+
+function shareSingle() {
+  const item = videoList[0];
+  if (!item || item.status !== 'done') return;
+  const metrics = getSavingMetrics(item.inputSize || 0, item.outputSize || 0);
+  openLink(tweetUrl(t('share.singleTweet', { pct: metrics.pct })));
+}
+
+function shareBatch() {
+  const completed = videoList.filter((v) => v.status === 'done');
+  if (completed.length === 0) return;
+  const inTotal = completed.reduce((s, v) => s + (v.inputSize || 0), 0);
+  const outTotal = completed.reduce((s, v) => s + (v.outputSize || 0), 0);
+  const metrics = getSavingMetrics(inTotal, outTotal);
+  openLink(tweetUrl(t('share.batchTweet', { n: completed.length, pct: metrics.pct })));
+}
+
+if (singleShareBtn) singleShareBtn.addEventListener('click', shareSingle);
+if (batchShareBtn) batchShareBtn.addEventListener('click', shareBatch);
+
+// ========================
+// Welcome banner (one-time)
+// ========================
+function maybeShowWelcomeBanner() {
+  let dismissed = null;
+  try { dismissed = localStorage.getItem('shrinkmaster.welcome.dismissed'); } catch (e) {}
+  if (dismissed === '1') return;
+  if (welcomeBanner) welcomeBanner.classList.remove('hidden');
+}
+
+if (welcomeBannerClose) {
+  welcomeBannerClose.addEventListener('click', () => {
+    try { localStorage.setItem('shrinkmaster.welcome.dismissed', '1'); } catch (e) {}
+    welcomeBanner.classList.add('hidden');
+  });
+}
+if (welcomeBannerAction) {
+  welcomeBannerAction.addEventListener('click', (e) => {
+    e.preventDefault();
+    openLink(LINKS.twitter);
+    try { localStorage.setItem('shrinkmaster.welcome.dismissed', '1'); } catch (err) {}
+    welcomeBanner.classList.add('hidden');
+  });
+}
+
+// ========================
+// About: version + manual update check
+// ========================
+async function loadVersion() {
+  if (!aboutVersion) return;
+  try {
+    const v = await window.electronAPI.getAppVersion();
+    aboutVersion.textContent = v ? `v${v}` : '—';
+  } catch (e) {
+    aboutVersion.textContent = '—';
+  }
+}
+
+function compareVersions(a, b) {
+  // Strip leading "v" and compare semver-ish
+  const pa = a.replace(/^v/, '').split('.').map((n) => parseInt(n, 10) || 0);
+  const pb = b.replace(/^v/, '').split('.').map((n) => parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const x = pa[i] || 0;
+    const y = pb[i] || 0;
+    if (x !== y) return x - y;
+  }
+  return 0;
+}
+
+if (aboutCheckUpdate) {
+  aboutCheckUpdate.addEventListener('click', async () => {
+    aboutUpdateResult.textContent = ' ' + t('about.checking');
+    try {
+      const res = await window.electronAPI.checkForUpdates();
+      if (!res || !res.success) {
+        aboutUpdateResult.textContent = ' ' + t('about.checkFailed', { err: (res && res.error) || 'unknown' });
+        return;
+      }
+      const current = await window.electronAPI.getAppVersion();
+      const cmp = compareVersions(res.tag, current);
+      if (cmp > 0) {
+        aboutUpdateResult.textContent = ' ';
+        const link = document.createElement('a');
+        link.textContent = t('about.updateAvailable', { tag: res.tag });
+        link.style.cursor = 'pointer';
+        link.style.color = 'var(--primary)';
+        link.addEventListener('click', () => openLink(res.url || LINKS.github + '/releases/latest'));
+        aboutUpdateResult.appendChild(link);
+      } else {
+        aboutUpdateResult.textContent = ' ' + t('about.upToDate');
+      }
+    } catch (err) {
+      aboutUpdateResult.textContent = ' ' + t('about.checkFailed', { err: err.message });
+    }
+  });
+}
+
+// ========================
 // i18n bootstrap
 // ========================
 async function initializeLocale() {
@@ -1139,6 +1318,9 @@ if (languageSelect) {
 // ========================
 async function initializeApp() {
   await initializeLocale();
+  wireFooterLinks();
+  loadVersion();
+  maybeShowWelcomeBanner();
   setMode('home');
   renderBatchQueue();
   resetSingleScreen();

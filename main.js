@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const { spawn, execSync } = require('child_process');
 const fs = require('fs');
@@ -426,10 +426,6 @@ ipcMain.handle('cancel-compress', async () => {
 });
 
 // ========================
-// IPC: Reveal a file/folder in Finder
-// ========================
-const { shell } = require('electron');
-// ========================
 // IPC: Save-as — copy a compressed file to a user-chosen location
 // ========================
 ipcMain.handle('save-as', async (event, { sourcePath, suggestedName }) => {
@@ -447,7 +443,6 @@ ipcMain.handle('save-as', async (event, { sourcePath, suggestedName }) => {
   }
   try {
     fs.copyFileSync(sourcePath, result.filePath);
-    const { shell } = require('electron');
     shell.showItemInFolder(result.filePath);
     return { success: true, savedPath: result.filePath };
   } catch (err) {
@@ -459,6 +454,51 @@ ipcMain.handle('save-as', async (event, { sourcePath, suggestedName }) => {
 ipcMain.handle('get-locale', async () => {
   // Returns BCP-47 tag, e.g. "en-US", "zh-CN", "zh-TW"
   return app.getLocale() || 'en-US';
+});
+
+// ========================
+// IPC: Open external URL in default browser
+// ========================
+ipcMain.handle('open-external', async (event, url) => {
+  console.log('[MAIN][IPC] open-external:', url);
+  if (typeof url !== 'string' || !/^https?:\/\//.test(url)) {
+    return { success: false, error: 'invalid url' };
+  }
+  try {
+    await shell.openExternal(url);
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+});
+
+// ========================
+// IPC: App version (from package.json)
+// ========================
+ipcMain.handle('get-app-version', async () => {
+  return app.getVersion();
+});
+
+// ========================
+// IPC: Manual update check (queries GitHub Releases API on demand)
+// ========================
+ipcMain.handle('check-for-updates', async () => {
+  console.log('[MAIN][IPC] check-for-updates');
+  try {
+    const res = await fetch('https://api.github.com/repos/kellypeng/shrinkmaster/releases/latest', {
+      headers: { 'User-Agent': 'ShrinkMaster' },
+    });
+    if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
+    const data = await res.json();
+    return {
+      success: true,
+      tag: data.tag_name || '',
+      url: data.html_url || '',
+      publishedAt: data.published_at || '',
+    };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
 });
 
 ipcMain.handle('stat-path', async (event, p) => {

@@ -48,6 +48,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
         return ipcRenderer.invoke('save-as', { sourcePath, suggestedName });
     },
     getLocale: () => ipcRenderer.invoke('get-locale'),
+    openExternal: (url) => ipcRenderer.invoke('open-external', url),
+    getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+    checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
     // Duration
     getDuration: (filePath) => {
         console.log('[PRELOAD] getDuration() called with:', filePath);
