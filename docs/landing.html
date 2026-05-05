@@ -3,217 +3,290 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShrinkMaster — Shrink videos locally. Free, open source, made for Mac.</title>
-  <meta name="description" content="A free, open-source macOS app that shrinks videos by 70-90% using H.265 or AV1. Hardware accelerated, 100% local, no upload, no account. Made by indie developer Kelly Peng." />
+  <title>ShrinkMaster — Just videos. Made smaller.</title>
+  <meta name="description" content="A free, open-source Mac app that shrinks videos by 70-90% using H.265 or AV1. Hardware accelerated. 100% local. No upload, no account, no telemetry. Made by indie developer Kelly Peng." />
 
-  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="ShrinkMaster — Free, local-only video compression for Mac" />
-  <meta property="og:description" content="Shrink videos by up to 90% with H.265 or AV1. 100% local, free forever, open source." />
+  <meta property="og:title" content="ShrinkMaster — Just videos. Made smaller." />
+  <meta property="og:description" content="A free, open-source Mac app that shrinks videos by 70-90%. 100% local. No upload, no account." />
   <meta property="og:url" content="https://github.com/kellypeng/shrinkmaster" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@kellyyuweipeng" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #f7f8fb;
+      /* Light surfaces */
+      --bg: #fafaf7;          /* warm off-white */
       --panel: #ffffff;
-      --text: #0f172a;
-      --text-soft: #334155;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --border-soft: #eef2f7;
+      --text: #0a0a0a;
+      --text-soft: #2a2a2a;
+      --muted: #777;
+      --border: #e8e6df;
+      --border-soft: #f0eee8;
+
+      /* Dark surfaces */
+      --bg-dark: #0a0a0a;
+      --bg-dark-soft: #141414;
+      --text-dark: #fafaf7;
+      --muted-dark: #888;
+
+      /* Accents */
       --primary: #1665e8;
       --primary-700: #1455be;
       --primary-soft: rgba(22, 101, 232, 0.08);
-      --success: #10b981;
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.04);
-      --shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 30px 60px rgba(15, 23, 42, 0.14);
+      --yellow: #ffe066;
+      --yellow-700: #f5c518;
+
+      /* Type scale */
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: Inter, "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 62.5%; scroll-behavior: smooth; }
     body {
-      font-family: Inter, "PingFang SC", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--text);
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; }
+    img, svg { display: block; max-width: 100%; }
+    ::selection { background: var(--yellow); color: #0a0a0a; }
 
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .container-narrow { max-width: 820px; margin: 0 auto; padding: 0 28px; }
 
-    /* === Top announcement bar === */
-    .announce {
-      background: linear-gradient(90deg, #1e6cff, #1455be);
-      color: #fff;
-      text-align: center;
-      padding: 9px 16px;
-      font-size: 1.35rem;
-      font-weight: 500;
-    }
-    .announce a { font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-
-    /* === Nav === */
+    /* ============================================================
+       NAV (sits on dark hero, then transitions to light)
+       ============================================================ */
     nav.top {
-      background: rgba(247, 248, 251, 0.85);
-      backdrop-filter: saturate(180%) blur(10px);
-      -webkit-backdrop-filter: saturate(180%) blur(10px);
-      border-bottom: 1px solid var(--border-soft);
-      position: sticky;
-      top: 0;
+      position: absolute;
+      top: 0; left: 0; right: 0;
       z-index: 50;
+      padding: 22px 0;
     }
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
     .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: linear-gradient(160deg, #1e6cff 0%, #1455be 100%);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 6px 14px rgba(22, 101, 232, 0.3);
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(155deg, #2f7df6 0%, #1665e8 100%);
+      display: grid; place-items: center;
+      box-shadow: 0 8px 24px rgba(22, 101, 232, 0.4);
     }
-    .brand-name { font-size: 1.85rem; font-weight: 800; letter-spacing: -0.015em; }
-    .brand-name b { color: var(--primary); font-weight: 800; }
-    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .brand-icon svg { width: 22px; height: 22px; }
+    .brand-name {
+      font-family: var(--sans);
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+    }
+    .brand-name b { font-weight: 800; color: #6ea3ff; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
     .nav-links a {
-      color: var(--text-soft);
+      color: rgba(250, 250, 247, 0.7);
       font-size: 1.45rem;
       font-weight: 500;
       transition: color 0.15s;
     }
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover { color: var(--text-dark); }
     .nav-cta {
       padding: 9px 18px;
       border-radius: 999px;
-      background: var(--text);
-      color: #fff !important;
-      font-weight: 600;
+      background: var(--text-dark);
+      color: var(--bg-dark) !important;
+      font-weight: 700;
+      transition: 0.15s;
     }
-    .nav-cta:hover { background: var(--primary); }
+    .nav-cta:hover { background: var(--yellow); }
     @media (max-width: 720px) {
       .nav-links { gap: 18px; }
       .nav-link-features, .nav-link-faq { display: none; }
     }
 
-    /* === Hero === */
+    /* ============================================================
+       HERO (dark, asymmetric two-column on desktop)
+       ============================================================ */
     section.hero {
-      padding: 80px 0 60px;
-      text-align: center;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      padding: 130px 0 0;
+      overflow: hidden;
+      position: relative;
     }
-    .eyebrow {
+    .hero::before {
+      /* Subtle gradient mesh background */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(22, 101, 232, 0.18), transparent 65%),
+        radial-gradient(700px 400px at 90% 90%, rgba(255, 224, 102, 0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 60px;
+      align-items: center;
+      padding-bottom: 70px;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 60px; }
+    }
+
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 6px 12px 6px 8px;
       border-radius: 999px;
-      background: var(--primary-soft);
-      color: var(--primary);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       font-size: 1.3rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 22px;
+      font-weight: 600;
+      color: rgba(250, 250, 247, 0.85);
+      margin-bottom: 28px;
     }
-    .eyebrow .dot {
-      width: 6px;
-      height: 6px;
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--yellow);
+      box-shadow: 0 0 12px var(--yellow);
     }
-    h1 {
-      font-size: clamp(3.6rem, 6vw, 6.4rem);
-      letter-spacing: -0.035em;
-      line-height: 1.05;
+    .hero-eyebrow .v {
+      background: var(--yellow);
+      color: #0a0a0a;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-right: -2px;
+    }
+
+    h1.hero-title {
+      font-size: clamp(4.4rem, 7vw, 8rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
       font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
-    h1 .accent { color: var(--primary); }
-    .lede {
+    h1.hero-title .serif {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      color: var(--yellow);
+    }
+    h1.hero-title .strike {
+      position: relative;
+      display: inline-block;
+      color: rgba(250, 250, 247, 0.4);
+    }
+    h1.hero-title .strike::after {
+      content: "";
+      position: absolute;
+      left: -2%; right: -2%;
+      top: 52%;
+      height: 6px;
+      background: var(--yellow);
+      transform: rotate(-3deg);
+    }
+
+    .hero-lede {
       font-size: 1.95rem;
-      color: var(--text-soft);
-      max-width: 680px;
-      margin: 0 auto 32px;
-      line-height: 1.55;
+      color: rgba(250, 250, 247, 0.7);
+      max-width: 540px;
+      line-height: 1.5;
+      margin-bottom: 32px;
     }
+    .hero-lede em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.1em;
+      color: var(--text-dark);
+      letter-spacing: -0.01em;
+    }
+
     .cta-row {
       display: inline-flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
     .btn-primary, .btn-secondary {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 16px 28px;
+      padding: 17px 28px;
       border-radius: 999px;
-      font-size: 1.65rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      letter-spacing: -0.005em;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
       border: 0;
+      cursor: pointer;
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #2f7df6);
-      color: #fff;
-      box-shadow: 0 14px 30px rgba(22, 101, 232, 0.32);
+      background: var(--yellow);
+      color: var(--bg-dark);
+      box-shadow: 0 14px 30px rgba(255, 224, 102, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 18px 36px rgba(22, 101, 232, 0.42); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(255, 224, 102, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
     .btn-secondary {
-      background: #fff;
-      color: var(--text);
-      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-dark);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
-    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-icon { width: 18px; height: 18px; }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); }
+    .btn-icon { width: 17px; height: 17px; }
 
     .trust-row {
       display: inline-flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      color: var(--muted);
+      gap: 18px;
+      color: rgba(250, 250, 247, 0.5);
       font-size: 1.32rem;
-      margin-top: 6px;
     }
-    .trust-row span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .trust-row svg { width: 14px; height: 14px; opacity: 0.7; }
+    .trust-row span { display: inline-flex; align-items: center; gap: 6px; }
+    .trust-row svg { width: 13px; height: 13px; }
 
-    /* === Hero visual: app mockup === */
+    /* Hero visual: app preview card (right column) */
+    .hero-preview {
+      position: relative;
+      perspective: 1400px;
+    }
     .hero-shot {
-      max-width: 980px;
-      width: 100%;
-      margin: 56px auto 0;
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
       overflow: hidden;
       background: #fff;
+      transform: rotateY(-6deg) rotateX(2deg);
+      transform-origin: center center;
+      transition: transform 0.5s ease;
     }
-    .hero-shot img { width: 100%; height: auto; display: block; }
-
-    /* When no real screenshot: stylized placeholder */
+    .hero-preview:hover .hero-shot { transform: rotateY(-2deg) rotateX(0deg); }
     .hero-shot.placeholder {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 4 / 3;
       background:
         radial-gradient(800px 320px at 20% 0%, rgba(22, 101, 232, 0.12), transparent 60%),
         radial-gradient(600px 260px at 80% 100%, rgba(22, 101, 232, 0.08), transparent 60%),
@@ -222,216 +295,382 @@
       flex-direction: column;
     }
     .mock-titlebar {
-      height: 28px;
+      height: 32px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       padding: 0 14px;
-      border-bottom: 1px solid var(--border-soft);
+      background: #f1f3f7;
+      border-bottom: 1px solid #e2e8f0;
     }
-    .mock-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .mock-dot { width: 12px; height: 12px; border-radius: 50%; }
     .mock-dot.r { background: #ff5f57; }
     .mock-dot.y { background: #febc2e; }
     .mock-dot.g { background: #28c840; }
-    .mock-body {
-      flex: 1;
-      display: grid;
-      place-items: center;
-      padding: 30px;
-      text-align: center;
-    }
+    .mock-body { flex: 1; display: grid; place-items: center; padding: 32px; text-align: center; }
     .mock-ring {
-      width: 220px;
-      height: 220px;
+      width: 200px; height: 200px;
       border-radius: 50%;
       background: conic-gradient(var(--primary) 0deg 313deg, #e2e8f0 313deg 360deg);
-      display: grid;
-      place-items: center;
+      display: grid; place-items: center;
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .mock-ring::before {
       content: "";
       position: absolute;
-      inset: 12px;
+      inset: 14px;
       background: #fff;
       border-radius: 50%;
     }
     .mock-ring span {
       position: relative;
-      font-size: 4.6rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .mock-caption b { font-size: 1.85rem; font-weight: 700; }
-    .mock-caption p { color: var(--muted); font-size: 1.45rem; margin-top: 4px; }
-
-    /* === Quick demo: before/after === */
-    section.demo {
-      padding: 60px 0 80px;
-    }
-    .demo-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 20px;
-      max-width: 880px;
-      margin: 0 auto;
-    }
-    .demo-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 28px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-    }
-    .demo-card.after {
-      border-color: rgba(22, 101, 232, 0.4);
-      background: linear-gradient(160deg, #fff, #f5faff);
-    }
-    .demo-label {
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .demo-card.after .demo-label { color: var(--primary); }
-    .demo-size {
       font-size: 4.4rem;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #0f172a;
     }
-    .demo-meta { color: var(--muted); font-size: 1.4rem; margin-top: 8px; }
-    .demo-arrow {
-      display: grid;
-      place-items: center;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.5rem;
-      box-shadow: 0 10px 24px rgba(22, 101, 232, 0.35);
-    }
-    .demo-note {
+    .mock-caption b { font-size: 1.85rem; font-weight: 700; color: #0f172a; }
+    .mock-caption p { color: #64748b; font-size: 1.4rem; margin-top: 4px; }
+
+    .replace-hint {
       text-align: center;
-      color: var(--muted);
-      font-size: 1.35rem;
-      margin-top: 20px;
-    }
-    @media (max-width: 720px) {
-      .demo-grid { grid-template-columns: 1fr; }
-      .demo-arrow { transform: rotate(90deg); justify-self: center; }
+      color: rgba(250, 250, 247, 0.3);
+      font-size: 1.15rem;
+      margin-top: 18px;
+      font-family: var(--mono);
     }
 
-    /* === Section heads === */
-    .section-head { text-align: center; margin-bottom: 48px; }
+    /* ============================================================
+       MARQUEE (compression examples scrolling)
+       ============================================================ */
+    section.marquee {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 26px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee::before, .marquee::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee::before { left: 0; background: linear-gradient(90deg, var(--bg-dark), transparent); }
+    .marquee::after { right: 0; background: linear-gradient(-90deg, var(--bg-dark), transparent); }
+    .marquee-track {
+      display: flex;
+      gap: 50px;
+      animation: marquee 32s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 1.55rem;
+      font-weight: 500;
+      color: rgba(250, 250, 247, 0.55);
+    }
+    .marquee-item .arrow { color: var(--yellow); }
+    .marquee-item b { color: var(--text-dark); font-weight: 600; }
+    .marquee-item .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      flex-shrink: 0;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       SECTION HEADS (light sections)
+       ============================================================ */
     .section-eyebrow {
       display: inline-block;
       padding: 4px 12px;
       border-radius: 999px;
       background: var(--primary-soft);
       color: var(--primary);
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .section-head {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
     }
     .section-head h2 {
-      font-size: clamp(2.8rem, 4vw, 4rem);
-      letter-spacing: -0.025em;
-      line-height: 1.15;
+      font-size: clamp(3.2rem, 5vw, 5.2rem);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
       font-weight: 800;
     }
+    .section-head h2 .serif {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+    }
     .section-head .lede {
-      font-size: 1.7rem;
-      margin-top: 10px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 1.78rem;
+      color: var(--muted);
+      margin-top: 14px;
+      line-height: 1.5;
     }
 
-    /* === Features === */
-    section.features { padding: 80px 0; }
+    /* ============================================================
+       BEFORE / AFTER (signature visual)
+       ============================================================ */
+    section.demo {
+      padding: 110px 0 90px;
+    }
+    .demo-card-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .demo-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 40px 32px 36px;
+      text-align: center;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+    .demo-card.after {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      border-color: var(--bg-dark);
+    }
+    .demo-card.after::before {
+      content: "";
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 50px; height: 50px;
+      background: var(--yellow);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+    }
+    .demo-card.after::after {
+      content: "✓";
+      position: absolute;
+      top: 0; right: 0;
+      width: 50px; height: 50px;
+      display: grid; place-items: center;
+      transform: translate(8px, -8px) rotate(-12deg);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #0a0a0a;
+      z-index: 2;
+    }
+    .demo-label {
+      font-family: var(--mono);
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .demo-card.after .demo-label { color: var(--yellow); }
+    .demo-size {
+      font-size: 6.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-family: var(--sans);
+    }
+    .demo-size .unit {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.42em;
+      color: var(--muted);
+      margin-left: 2px;
+    }
+    .demo-card.after .demo-size .unit { color: rgba(250, 250, 247, 0.5); }
+    .demo-meta {
+      color: var(--muted);
+      font-size: 1.4rem;
+      margin-top: 10px;
+      font-family: var(--mono);
+    }
+    .demo-card.after .demo-meta { color: rgba(250, 250, 247, 0.55); }
+    .demo-arrow {
+      display: grid;
+      place-items: center;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--text);
+      color: var(--yellow);
+      font-weight: 800;
+      font-size: 2.2rem;
+      flex-shrink: 0;
+    }
+    .demo-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.4rem;
+      margin-top: 30px;
+      font-family: var(--mono);
+    }
+    @media (max-width: 720px) {
+      .demo-card-row { grid-template-columns: 1fr; }
+      .demo-arrow { transform: rotate(90deg); justify-self: center; }
+    }
+
+    /* ============================================================
+       FEATURES
+       ============================================================ */
+    section.features {
+      padding: 110px 0;
+      background: #fff;
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+    }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
     @media (max-width: 920px) { .features-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
     .feature-card {
       background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 26px;
-      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      padding: 32px 28px;
+      transition: background 0.15s;
     }
-    .feature-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow);
-    }
+    .feature-card:hover { background: var(--bg); }
     .feature-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: var(--primary-soft);
-      color: var(--primary);
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      background: var(--bg-dark);
+      color: var(--yellow);
       display: grid;
       place-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    .feature-icon svg { width: 22px; height: 22px; }
+    .feature-icon svg { width: 18px; height: 18px; }
     .feature-card b {
       display: block;
       font-size: 1.85rem;
       letter-spacing: -0.015em;
       margin-bottom: 6px;
       font-weight: 700;
+      font-family: var(--sans);
+    }
+    .feature-card b .serif {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--primary);
     }
     .feature-card p {
       color: var(--text-soft);
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       line-height: 1.55;
     }
 
-    /* === First-run instructions === */
+    /* ============================================================
+       PHILOSOPHY (one quote-style block, signature serif)
+       ============================================================ */
+    section.philosophy {
+      padding: 120px 0;
+      text-align: center;
+    }
+    .pq {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(3rem, 4.5vw, 4.6rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .pq .nope {
+      color: var(--muted);
+      position: relative;
+      display: inline-block;
+    }
+    .pq .nope::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      top: 56%;
+      height: 3px;
+      background: var(--primary);
+      transform: rotate(-2deg);
+    }
+    .pq-tag {
+      margin-top: 26px;
+      font-family: var(--mono);
+      font-size: 1.3rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .pq-tag::before { content: "// "; opacity: 0.5; }
+
+    /* ============================================================
+       FIRST RUN
+       ============================================================ */
     section.firstrun {
-      padding: 60px 0 80px;
-      background: linear-gradient(180deg, transparent, var(--primary-soft));
+      padding: 100px 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border-soft);
     }
     .firstrun-card {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 40px;
-      box-shadow: var(--shadow);
-      max-width: 800px;
+      padding: 48px 44px;
+      max-width: 820px;
       margin: 0 auto;
     }
     .firstrun-card h3 {
-      font-size: 2.4rem;
-      letter-spacing: -0.02em;
+      font-size: 2.6rem;
+      letter-spacing: -0.025em;
       margin-bottom: 8px;
       font-weight: 800;
+    }
+    .firstrun-card h3 .serif {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--primary);
     }
     .firstrun-card .sub {
       color: var(--muted);
       font-size: 1.55rem;
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
     .firstrun-steps {
       display: grid;
       gap: 14px;
       counter-reset: step;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .firstrun-steps li {
       list-style: none;
@@ -444,117 +683,149 @@
       counter-increment: step;
       content: counter(step);
       position: absolute;
-      left: 0;
-      top: -2px;
-      width: 32px;
-      height: 32px;
+      left: 0; top: -2px;
+      width: 32px; height: 32px;
       border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
+      background: var(--text);
+      color: var(--yellow);
       font-weight: 800;
       display: grid;
       place-items: center;
       font-size: 1.4rem;
+      font-family: var(--mono);
     }
     code {
-      background: #f1f5f9;
+      background: var(--bg);
       padding: 3px 8px;
-      border-radius: 6px;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      border-radius: 5px;
+      font-family: var(--mono);
       font-size: 0.92em;
       border: 1px solid var(--border);
     }
     pre {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 16px 20px;
-      border-radius: 12px;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      padding: 18px 22px;
+      border-radius: 11px;
       overflow-x: auto;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--mono);
       font-size: 1.4rem;
       margin-top: 18px;
     }
+    pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: var(--yellow);
+    }
 
-    /* === About me === */
+    /* ============================================================
+       ABOUT ME
+       ============================================================ */
     section.about {
-      padding: 80px 0;
+      padding: 110px 0;
     }
     .about-card {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 44px 40px;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      border-radius: 24px;
+      padding: 48px 44px;
       display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 26px;
+      grid-template-columns: 100px 1fr;
+      gap: 32px;
       align-items: center;
-      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::before {
+      content: "";
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      background: var(--yellow);
+      border-radius: 50%;
+      opacity: 0.1;
+      filter: blur(40px);
     }
     @media (max-width: 600px) {
-      .about-card { grid-template-columns: 1fr; text-align: center; }
+      .about-card { grid-template-columns: 1fr; text-align: center; padding: 36px 28px; }
     }
     .about-avatar {
-      width: 90px;
-      height: 90px;
+      width: 100px; height: 100px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1e6cff, #1455be);
-      display: grid;
-      place-items: center;
+      background: linear-gradient(135deg, #2f7df6, #1665e8);
+      display: grid; place-items: center;
       color: #fff;
-      font-size: 3.2rem;
-      font-weight: 800;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 4.2rem;
+      font-weight: 400;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
+    .about-text { position: relative; z-index: 2; }
     .about-text h3 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
       letter-spacing: -0.015em;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .about-text h3 .serif {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--yellow);
     }
     .about-text p {
-      color: var(--text-soft);
-      font-size: 1.5rem;
-      line-height: 1.55;
-      margin-bottom: 16px;
+      color: rgba(250, 250, 247, 0.7);
+      font-size: 1.55rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .about-text p em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.08em;
+      color: var(--text-dark);
     }
     .about-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
-    @media (max-width: 600px) {
-      .about-actions { justify-content: center; }
-    }
+    @media (max-width: 600px) { .about-actions { justify-content: center; } }
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 9px 16px;
+      padding: 10px 16px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-dark);
       font-size: 1.4rem;
       font-weight: 600;
       transition: 0.15s;
     }
-    .pill:hover { border-color: var(--primary); color: var(--primary); }
+    .pill:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); }
     .pill svg { width: 14px; height: 14px; }
     .pill.primary {
-      background: var(--text);
-      color: #fff;
-      border-color: var(--text);
+      background: var(--yellow);
+      color: var(--bg-dark);
+      border-color: var(--yellow);
     }
-    .pill.primary:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .pill.primary:hover { background: #fff; border-color: #fff; }
 
-    /* === FAQ === */
+    /* ============================================================
+       FAQ
+       ============================================================ */
     section.faq {
-      padding: 80px 0;
+      padding: 110px 0;
       background: #fff;
       border-top: 1px solid var(--border-soft);
-      border-bottom: 1px solid var(--border-soft);
     }
     .faq-list {
       max-width: 760px;
@@ -567,15 +838,16 @@
       border-radius: 14px;
       background: #fff;
       overflow: hidden;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, background 0.15s;
     }
-    .faq-item[open] { border-color: var(--primary); }
+    .faq-item[open] { border-color: var(--text); background: var(--bg); }
     .faq-item summary {
       list-style: none;
       cursor: pointer;
-      padding: 18px 22px;
+      padding: 20px 24px;
       font-weight: 600;
-      font-size: 1.6rem;
+      font-size: 1.65rem;
+      letter-spacing: -0.005em;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -589,207 +861,281 @@
       transition: transform 0.2s;
       color: var(--muted);
     }
-    .faq-item[open] .chev { transform: rotate(180deg); color: var(--primary); }
+    .faq-item[open] .chev { transform: rotate(180deg); color: var(--text); }
     .faq-body {
-      padding: 0 22px 20px;
+      padding: 0 24px 22px;
       color: var(--text-soft);
       font-size: 1.5rem;
       line-height: 1.65;
     }
-    .faq-body p { margin-bottom: 8px; }
+    .faq-body p { margin-bottom: 10px; }
     .faq-body p:last-child { margin-bottom: 0; }
     .faq-body a { color: var(--primary); font-weight: 600; }
-
-    /* === Final CTA === */
-    section.cta-final {
-      padding: 100px 0;
-      text-align: center;
+    .faq-body em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.05em;
+      color: var(--text);
     }
+
+    /* ============================================================
+       FINAL CTA
+       ============================================================ */
+    section.cta-final {
+      padding: 130px 0;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    section.cta-final::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(700px 400px at 50% 0%, rgba(255, 224, 102, 0.12), transparent 65%),
+        radial-gradient(900px 500px at 50% 100%, rgba(22, 101, 232, 0.18), transparent 65%);
+      pointer-events: none;
+    }
+    section.cta-final .container { position: relative; z-index: 2; }
     section.cta-final h2 {
-      font-size: clamp(3rem, 5vw, 4.6rem);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
+      font-size: clamp(3.6rem, 6vw, 6rem);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
       font-weight: 800;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
+    }
+    section.cta-final h2 .serif {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--yellow);
     }
     section.cta-final p {
-      color: var(--text-soft);
-      font-size: 1.8rem;
-      max-width: 560px;
-      margin: 0 auto 30px;
+      color: rgba(250, 250, 247, 0.6);
+      font-size: 1.85rem;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.55;
     }
 
-    /* === Footer === */
+    /* ============================================================
+       FOOTER
+       ============================================================ */
     footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 56px 0 30px;
+      background: var(--bg-dark);
+      color: rgba(250, 250, 247, 0.6);
+      padding: 70px 0 36px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
     .footer-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
+      gap: 44px;
+      margin-bottom: 50px;
     }
     @media (max-width: 760px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
     }
-    .footer-brand .brand-name { color: #fff; }
-    .footer-brand .brand-name b { color: #6ea3ff; }
     .footer-brand p {
-      color: #94a3b8;
-      font-size: 1.4rem;
-      margin: 14px 0 16px;
+      color: rgba(250, 250, 247, 0.45);
+      font-size: 1.42rem;
+      margin: 16px 0 18px;
       max-width: 320px;
+      line-height: 1.55;
     }
     .footer-col h6 {
-      font-size: 1.25rem;
+      font-size: 1.18rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #94a3b8;
-      margin-bottom: 14px;
+      letter-spacing: 0.12em;
+      color: rgba(250, 250, 247, 0.4);
+      margin-bottom: 16px;
+      font-family: var(--mono);
     }
-    .footer-col ul { list-style: none; display: grid; gap: 8px; }
+    .footer-col ul { list-style: none; display: grid; gap: 9px; }
     .footer-col a {
-      color: #cbd5e1;
-      font-size: 1.42rem;
+      color: rgba(250, 250, 247, 0.7);
+      font-size: 1.45rem;
       transition: color 0.15s;
     }
-    .footer-col a:hover { color: #fff; }
+    .footer-col a:hover { color: var(--yellow); }
     .footer-bottom {
-      border-top: 1px solid #1e293b;
-      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 26px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 14px;
-      color: #64748b;
+      color: rgba(250, 250, 247, 0.4);
       font-size: 1.32rem;
+      font-family: var(--mono);
     }
     .footer-social {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
     .footer-social a {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 8px;
-      background: #1e293b;
+      background: rgba(255, 255, 255, 0.06);
       display: grid;
       place-items: center;
-      color: #cbd5e1;
+      color: rgba(250, 250, 247, 0.6);
       transition: 0.15s;
     }
-    .footer-social a:hover { background: var(--primary); color: #fff; }
+    .footer-social a:hover { background: var(--yellow); color: var(--bg-dark); }
     .footer-social svg { width: 14px; height: 14px; }
+
   </style>
 </head>
 <body>
 
-  <div class="announce">
-    🎉 ShrinkMaster v0.1.0 is out — <a href="https://github.com/kellypeng/shrinkmaster/releases/latest">first public release</a>
-  </div>
-
-  <nav class="top">
-    <div class="container nav-inner">
-      <a href="#" class="brand">
-        <div class="brand-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 7.5v6.2"/>
-            <path d="M7.2 10.3 10 7.5l2.8 2.8"/>
-            <path d="M22 24.5v-6.2"/>
-            <path d="M19.2 21.7 22 24.5l2.8-2.8"/>
-            <path d="M8 14.5h16" stroke-width="2.6"/>
-            <path d="M10.5 17.5h11" stroke-width="2.6"/>
-            <path d="M13 20.5h6" stroke-width="2.6"/>
-          </svg>
-        </div>
-        <div class="brand-name">Shrink<b>Master</b></div>
-      </a>
-      <div class="nav-links">
-        <a class="nav-link-features" href="#features">Features</a>
-        <a class="nav-link-faq" href="#faq">FAQ</a>
-        <a href="https://github.com/kellypeng/shrinkmaster">GitHub</a>
-        <a class="nav-cta" href="https://github.com/kellypeng/shrinkmaster/releases/latest">Download</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ====== HERO ====== -->
+  <!-- ============================== HERO ============================== -->
   <section class="hero">
-    <div class="container">
-      <div class="eyebrow"><span class="dot"></span> Free · Open Source · Made for Mac</div>
-      <h1>Shrink videos by 90%.<br><span class="accent">Locally. For free.</span></h1>
-      <p class="lede">ShrinkMaster re-encodes your videos with H.265 or AV1 using your Mac's hardware encoder — typically reclaiming 70-90% of the file size. 100% local. No upload, no account, no telemetry. Forever.</p>
-      <div class="cta-row">
-        <a class="btn-primary" href="https://github.com/kellypeng/shrinkmaster/releases/latest">
-          <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.5 1.5a.5.5 0 0 0-1 0v8.793L4.354 7.146a.5.5 0 1 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0-.708-.708L8.5 10.293V1.5zM2 13.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
-          Download for macOS
+    <nav class="top">
+      <div class="container nav-inner">
+        <a href="#" class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 7.5v6.2"/><path d="M7.2 10.3 10 7.5l2.8 2.8"/>
+              <path d="M22 24.5v-6.2"/><path d="M19.2 21.7 22 24.5l2.8-2.8"/>
+              <path d="M8 14.5h16" stroke-width="2.6"/>
+              <path d="M10.5 17.5h11" stroke-width="2.6"/>
+              <path d="M13 20.5h6" stroke-width="2.6"/>
+            </svg>
+          </div>
+          <div class="brand-name">Shrink<b>Master</b></div>
         </a>
-        <a class="btn-secondary" href="https://github.com/kellypeng/shrinkmaster">
-          <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
-          Star on GitHub
-        </a>
-      </div>
-      <div class="trust-row">
-        <span>
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM8 11.83 4.17 8 5.59 6.59 8 9l4.41-4.41L13.83 6 8 11.83z"/></svg>
-          Universal binary (Intel + Apple Silicon)
-        </span>
-        <span>·</span>
-        <span>macOS 11+</span>
-        <span>·</span>
-        <span>MIT licensed</span>
-      </div>
-
-      <div class="hero-shot placeholder">
-        <div class="mock-titlebar">
-          <span class="mock-dot r"></span>
-          <span class="mock-dot y"></span>
-          <span class="mock-dot g"></span>
+        <div class="nav-links">
+          <a class="nav-link-features" href="#features">Features</a>
+          <a class="nav-link-faq" href="#faq">FAQ</a>
+          <a href="https://github.com/kellypeng/shrinkmaster">GitHub</a>
+          <a class="nav-cta" href="https://github.com/kellypeng/shrinkmaster/releases/latest">Download</a>
         </div>
-        <div class="mock-body">
-          <div class="mock-ring"><span>87%</span></div>
-          <div class="mock-caption">
-            <b>Compression Complete</b>
-            <p>245 MB → 31 MB · saved 87% · 12.3 seconds</p>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="v">v0.1.0</span>
+            <span class="dot"></span>
+            Just shipped — universal binary, free forever
+          </div>
+          <h1 class="hero-title">
+            Just videos.<br>
+            <span class="serif">Made smaller.</span>
+          </h1>
+          <p class="hero-lede">
+            ShrinkMaster does <em>one thing</em> — re-encode your videos with H.265 or AV1 — and does it really well. Hardware accelerated. 100% local. Open source. Free forever.
+          </p>
+          <div class="cta-row">
+            <a class="btn-primary" href="https://github.com/kellypeng/shrinkmaster/releases/latest">
+              <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8.5 1.5a.5.5 0 0 0-1 0v8.793L4.354 7.146a.5.5 0 1 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0-.708-.708L8.5 10.293V1.5zM2 13.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+              Download for macOS
+            </a>
+            <a class="btn-secondary" href="https://github.com/kellypeng/shrinkmaster">
+              <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+              Star on GitHub
+            </a>
+          </div>
+          <div class="trust-row">
+            <span>
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM8 11.83 4.17 8 5.59 6.59 8 9l4.41-4.41L13.83 6 8 11.83z"/></svg>
+              Universal · Intel + Apple Silicon
+            </span>
+            <span>·</span>
+            <span>macOS 11+</span>
+            <span>·</span>
+            <span>MIT</span>
           </div>
         </div>
+
+        <div class="hero-preview">
+          <div class="hero-shot placeholder">
+            <div class="mock-titlebar">
+              <span class="mock-dot r"></span>
+              <span class="mock-dot y"></span>
+              <span class="mock-dot g"></span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-ring"><span>87%</span></div>
+              <div class="mock-caption">
+                <b>Compression Complete</b>
+                <p>245 MB → 31 MB · saved 87%</p>
+              </div>
+            </div>
+          </div>
+          <div class="replace-hint">// drop a real screenshot here</div>
+        </div>
       </div>
-      <p style="text-align:center; color: var(--muted); font-size: 1.32rem; margin-top: 14px;">
-        Replace this placeholder with a real screenshot of the app.
-      </p>
     </div>
   </section>
 
-  <!-- ====== BEFORE / AFTER ====== -->
+  <!-- ========================== MARQUEE ========================== -->
+  <section class="marquee">
+    <div class="marquee-track">
+      <!-- Set A -->
+      <span class="marquee-item"><b>1.2 GB</b> <span class="arrow">→</span> <b>180 MB</b> <span style="color: var(--yellow);">−85%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>245 MB</b> <span class="arrow">→</span> <b>31 MB</b> <span style="color: var(--yellow);">−87%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>4K screen recording</b> <span class="arrow">→</span> <b>fits in email</b></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>670 MB</b> <span class="arrow">→</span> <b>74 MB</b> <span style="color: var(--yellow);">−89%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>iPhone slow-mo</b> <span class="arrow">→</span> <b>WhatsApp-ready</b></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <!-- Set B (duplicate for seamless loop) -->
+      <span class="marquee-item"><b>1.2 GB</b> <span class="arrow">→</span> <b>180 MB</b> <span style="color: var(--yellow);">−85%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>245 MB</b> <span class="arrow">→</span> <b>31 MB</b> <span style="color: var(--yellow);">−87%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>4K screen recording</b> <span class="arrow">→</span> <b>fits in email</b></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>670 MB</b> <span class="arrow">→</span> <b>74 MB</b> <span style="color: var(--yellow);">−89%</span></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+      <span class="marquee-item"><b>iPhone slow-mo</b> <span class="arrow">→</span> <b>WhatsApp-ready</b></span>
+      <span class="marquee-item"><span class="dot"></span></span>
+    </div>
+  </section>
+
+  <!-- ========================== BEFORE / AFTER ========================== -->
   <section class="demo">
     <div class="container">
-      <div class="demo-grid">
+      <div class="section-head">
+        <span class="section-eyebrow">A typical run</span>
+        <h2>This is what <span class="serif">90%</span> looks like.</h2>
+        <p class="lede">Real example, hardware-encoded on an M1 Mac. Not cherry-picked — the average screen recording or phone clip lands somewhere in this range.</p>
+      </div>
+      <div class="demo-card-row">
         <div class="demo-card">
           <div class="demo-label">Before</div>
-          <div class="demo-size">245 <span style="font-size:1.8rem; color: var(--muted); font-weight: 600;">MB</span></div>
-          <div class="demo-meta">4K · h.264 · 8 minutes</div>
+          <div class="demo-size">245<span class="unit">MB</span></div>
+          <div class="demo-meta">4K · h.264 · 8 min</div>
         </div>
         <div class="demo-arrow">→</div>
         <div class="demo-card after">
           <div class="demo-label">After</div>
-          <div class="demo-size">31 <span style="font-size:1.8rem; color: var(--muted); font-weight: 600;">MB</span></div>
-          <div class="demo-meta">4K · h.265 · same length</div>
+          <div class="demo-size">31<span class="unit">MB</span></div>
+          <div class="demo-meta">4K · h.265 · 8 min</div>
         </div>
       </div>
-      <p class="demo-note">A real example. Hardware-encoded on an M1 Mac in ~12 seconds.</p>
+      <p class="demo-note">// 12 seconds on an M1 Air, including Save As</p>
     </div>
   </section>
 
-  <!-- ====== FEATURES ====== -->
+  <!-- ========================== FEATURES ========================== -->
   <section class="features" id="features">
     <div class="container">
       <div class="section-head">
         <span class="section-eyebrow">Features</span>
-        <h2>Built for getting it done</h2>
-        <p class="lede">Six things, well — instead of fifty things, badly.</p>
+        <h2>Six things, <span class="serif">done well.</span></h2>
+        <p class="lede">Instead of fifty things, half-baked. (Looking at you, every other "all-in-one" file utility.)</p>
       </div>
 
       <div class="features-grid">
@@ -797,8 +1143,8 @@
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <b>100% local</b>
-          <p>Your videos never leave your Mac. No upload, no cloud, no account. The app makes one optional GitHub call only when you click "check for updates."</p>
+          <b><span class="serif">100%</span> local</b>
+          <p>Your videos never leave your Mac. No upload, no cloud, no account. The only network call ShrinkMaster makes is to GitHub Releases — and only when you click "check for updates."</p>
         </div>
 
         <div class="feature-card">
@@ -806,7 +1152,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
           <b>Hardware accelerated</b>
-          <p>Auto-detects VideoToolbox on Mac, NVENC / Quick Sync / AMF on PC. Falls back to a fast SVT-AV1 / libx265 CPU path if no GPU encoder is available.</p>
+          <p>Auto-detects VideoToolbox on Mac, NVENC / Quick Sync / AMF on PC. CPU fallback uses SVT-AV1 or libx265 — still fast.</p>
         </div>
 
         <div class="feature-card">
@@ -814,62 +1160,73 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
           </div>
           <b>H.265 + AV1</b>
-          <p>Modern codecs with sane defaults. The H.265 preset is fast and universally compatible; AV1 trades speed for the smallest file size.</p>
+          <p>Modern codecs with sane defaults. H.265 is fast and universally compatible. AV1 trades speed for the smallest file size you can ship.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           </div>
-          <b>Drag &amp; drop · batch</b>
-          <p>Drop one file or a hundred. Real cancel during compression — kills the ffmpeg process and cleans up. Save As dialog routes the result anywhere.</p>
+          <b>Drag, drop, <span class="serif">batch.</span></b>
+          <p>One file or a hundred. Real cancel during compression — actually kills ffmpeg, cleans up half-written output. Save As lands the result anywhere.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
-          <b>Bilingual</b>
-          <p>English and 简体中文 — follows your system language by default. Switch any time in Advanced Settings. The first ffmpeg GUI built bilingual from day one.</p>
+          <b>EN + 中文</b>
+          <p>Bilingual from day one — follows your system language by default, switchable in Advanced Settings. Most ffmpeg GUIs are English-only.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
           </div>
-          <b>Free forever</b>
-          <p>MIT licensed, source on GitHub, no in-app purchases, no upsells, no telemetry. If it dies, you can fork it.</p>
+          <b>Free <span class="serif">forever</span></b>
+          <p>MIT licensed. Source on GitHub. No paid tier, no in-app purchase, no telemetry. If I disappear tomorrow you can fork it and keep going.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== FIRST-RUN INSTRUCTIONS ====== -->
+  <!-- ========================== PHILOSOPHY QUOTE ========================== -->
+  <section class="philosophy">
+    <div class="container-narrow">
+      <p class="pq">
+        Compresses videos. <span class="nope">Not images. Not PDFs. Not GIFs.</span><br>
+        <em>Just videos. On purpose.</em>
+      </p>
+      <p class="pq-tag">Doing one thing well is a feature.</p>
+    </div>
+  </section>
+
+  <!-- ========================== FIRST RUN ========================== -->
   <section class="firstrun" id="install">
     <div class="container">
       <div class="firstrun-card">
-        <h3>Opening on macOS for the first time</h3>
-        <p class="sub">ShrinkMaster isn't yet signed with an Apple Developer ID, so macOS will block the first launch with <em>"cannot be opened because the developer cannot be verified."</em> Workaround takes 5 seconds, only needed once.</p>
+        <h3>Opening on macOS for the <span class="serif">first time</span></h3>
+        <p class="sub">ShrinkMaster isn't yet code-signed (Apple Developer Program is $99/yr — a real expense for a free tool). macOS will block the first launch with <em>"cannot be opened because the developer cannot be verified."</em> Bypass takes 5 seconds, only needed once.</p>
         <ol class="firstrun-steps">
           <li>Drag <code>ShrinkMaster.app</code> into your <strong>Applications</strong> folder</li>
           <li><strong>Right-click</strong> the app → choose <strong>Open</strong> (don't double-click yet)</li>
           <li>Click <strong>Open</strong> in the confirmation dialog macOS shows</li>
         </ol>
-        <p style="color: var(--muted); font-size: 1.42rem;">After that, it opens normally. If macOS still refuses, run this in Terminal:</p>
-        <pre>xattr -cr /Applications/ShrinkMaster.app</pre>
+        <p style="color: var(--muted); font-size: 1.42rem;">After that, it opens like any other app. If macOS still refuses, run this in Terminal:</p>
+        <pre><code>xattr -cr /Applications/ShrinkMaster.app</code></pre>
       </div>
     </div>
   </section>
 
-  <!-- ====== ABOUT ME ====== -->
+  <!-- ========================== ABOUT ME ========================== -->
   <section class="about">
     <div class="container">
       <div class="about-card">
         <div class="about-avatar">K</div>
         <div class="about-text">
-          <h3>Hi, I'm Kelly Peng 👋</h3>
-          <p>ShrinkMaster is a side project I built because I was tired of HandBrake's settings panel and 25-dollar one-trick alternatives. It's free, open source, and 100% local because that's how I want my own video tools to work.</p>
-          <p>Follow me on Twitter for updates on this and other indie tools.</p>
+          <h3>Hi, I'm <span class="serif">Kelly Peng</span> 👋</h3>
+          <p>ShrinkMaster is a side project I built because I was tired of HandBrake's settings panel and tired of paying $25 for one-trick alternatives. <em>It's free, open source, 100% local — because that's how I want my own video tools to work.</em></p>
+          <p>Follow me on Twitter — I post about indie tools, side projects, and what I'm building next.</p>
           <div class="about-actions">
             <a class="pill primary" href="https://twitter.com/kellyyuweipeng">
               <svg viewBox="0 0 16 16" fill="currentColor"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg>
@@ -877,7 +1234,7 @@
             </a>
             <a class="pill" href="https://github.com/kellypeng/shrinkmaster">
               <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
-              Star on GitHub
+              Star the repo
             </a>
           </div>
         </div>
@@ -885,12 +1242,12 @@
     </div>
   </section>
 
-  <!-- ====== FAQ ====== -->
+  <!-- ========================== FAQ ========================== -->
   <section class="faq" id="faq">
     <div class="container">
       <div class="section-head">
         <span class="section-eyebrow">FAQ</span>
-        <h2>Frequently asked questions</h2>
+        <h2>Things you might <span class="serif">be wondering.</span></h2>
       </div>
       <div class="faq-list">
 
@@ -899,28 +1256,38 @@
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>Yes. MIT licensed. No paid tier, no in-app purchases, no upsells. <a href="https://github.com/kellypeng/shrinkmaster">The source is public on GitHub</a> — if I ever vanish, you can fork it.</p>
-            <p>If you want to thank me, a Star on GitHub or a follow on Twitter is plenty.</p>
+            <p>Yes. <em>MIT licensed.</em> No paid tier, no in-app purchase, no upsell. <a href="https://github.com/kellypeng/shrinkmaster">Source is public on GitHub</a> — if I vanish, you can fork it.</p>
+            <p>If you want to thank me: a Star on GitHub or a follow on Twitter is plenty.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Why is the app not code-signed? Is it dangerous?
+          <summary>Why does it only do videos?
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>Apple Developer Program membership costs $99/year — a real expense for a free tool with no revenue. So v0.1.0 ships unsigned ad-hoc, and you bypass Gatekeeper once via right-click → Open.</p>
-            <p>The source code is fully public. You can audit every line, build it yourself, or have your favorite LLM read it for you.</p>
+            <p>Because <em>scope discipline</em> is what makes a tool actually good. Compressing images well needs different libraries than video. PDFs need different libraries again. GIFs are essentially a third thing.</p>
+            <p>Apps that try to compress "everything" are usually mediocre at all of it. ShrinkMaster picked one job. If you need image / PDF compression there are better dedicated tools — I'm happy to recommend some on Twitter.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Does the app phone home or send any data?
+          <summary>Why isn't the app code-signed? Is it dangerous?
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>No analytics, no telemetry, no crash reporting. The only network call ShrinkMaster ever makes is to the GitHub Releases API — and only when you explicitly click "Check for updates" in Advanced Settings. By default the app is offline.</p>
-            <p>Your videos never leave your machine. No upload, no temp files in the cloud, nothing.</p>
+            <p>Apple Developer Program is $99/year — a real expense for a free tool with no revenue. So v0.1 ships unsigned ad-hoc, and you bypass Gatekeeper once via right-click → Open.</p>
+            <p>Source is fully public. Audit every line if you want, build it yourself, or have your favorite LLM read it for you.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does it phone home? Send any data?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-body">
+            <p>No analytics, no telemetry, no crash reporting. The <em>only</em> network call is to GitHub Releases — and only when you explicitly click "Check for updates." By default the app is offline.</p>
+            <p>Your videos never leave your machine. No temp files in the cloud. Nothing.</p>
           </div>
         </details>
 
@@ -929,16 +1296,7 @@
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>Because the app bundles its own ffmpeg + ffprobe binaries (about 130 MB each, universal2). That makes it work on any Mac immediately — no Homebrew, no command-line setup, just drag and run. Apple Silicon and Intel both run native code; no Rosetta needed.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>Will there be a Windows or Linux version?
-            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </summary>
-          <div class="faq-body">
-            <p>The codebase is platform-neutral — it's just Electron + ffmpeg subprocess. A Windows build is planned and tracked in <a href="https://github.com/kellypeng/shrinkmaster/issues">GitHub Issues</a>. Star the repo to be notified.</p>
+            <p>Because the app bundles its own ffmpeg + ffprobe binaries (~130 MB each, universal2). That makes it work on any Mac immediately — no Homebrew, no command-line setup, just drag and run. Apple Silicon and Intel both run native code, no Rosetta needed.</p>
           </div>
         </details>
 
@@ -947,16 +1305,16 @@
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>HandBrake is more powerful and you should keep it for advanced workflows. ShrinkMaster does one thing — shrink a video — with sane defaults, less surface area, and bilingual UI. If your workflow is "drop a video, get a smaller one," ShrinkMaster is faster to use. If you need to script your encoder ladder, use HandBrake or ffmpeg directly.</p>
+            <p>HandBrake is more powerful and you should keep it for advanced workflows. ShrinkMaster does <em>one thing</em> — make a video smaller — with sane defaults, less surface area, and bilingual UI. If your workflow is "drop a video, get a smaller one," ShrinkMaster is faster to use. If you need a custom encoder ladder, use HandBrake or ffmpeg directly.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary>Can I use it for commercial work?
+          <summary>Will there be a Windows version?
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </summary>
           <div class="faq-body">
-            <p>Yes. The app is MIT licensed; the bundled ffmpeg uses GPL-licensed encoders. As long as you're using the app to compress your own videos, you're fine. If you're embedding ShrinkMaster's code in another product you ship, the GPL terms of the bundled ffmpeg apply — at which point you should use a different ffmpeg build or talk to a lawyer.</p>
+            <p>The codebase is platform-neutral — it's just Electron + ffmpeg subprocess. A Windows build is planned. Star the repo to get notified.</p>
           </div>
         </details>
 
@@ -964,10 +1322,10 @@
     </div>
   </section>
 
-  <!-- ====== FINAL CTA ====== -->
+  <!-- ========================== FINAL CTA ========================== -->
   <section class="cta-final">
     <div class="container">
-      <h2>Stop paying for video compression.</h2>
+      <h2>Stop emailing<br><span class="serif">"sorry, file too big."</span></h2>
       <p>Reclaim your disk. Send videos that fit. Pay nothing. Open the source any time.</p>
       <div class="cta-row">
         <a class="btn-primary" href="https://github.com/kellypeng/shrinkmaster/releases/latest">
@@ -982,25 +1340,23 @@
     </div>
   </section>
 
-  <!-- ====== FOOTER ====== -->
+  <!-- ========================== FOOTER ========================== -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="brand">
+          <a href="#" class="brand">
             <div class="brand-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 7.5v6.2"/>
-                <path d="M7.2 10.3 10 7.5l2.8 2.8"/>
-                <path d="M22 24.5v-6.2"/>
-                <path d="M19.2 21.7 22 24.5l2.8-2.8"/>
+              <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 7.5v6.2"/><path d="M7.2 10.3 10 7.5l2.8 2.8"/>
+                <path d="M22 24.5v-6.2"/><path d="M19.2 21.7 22 24.5l2.8-2.8"/>
                 <path d="M8 14.5h16" stroke-width="2.6"/>
                 <path d="M10.5 17.5h11" stroke-width="2.6"/>
                 <path d="M13 20.5h6" stroke-width="2.6"/>
               </svg>
             </div>
             <div class="brand-name">Shrink<b>Master</b></div>
-          </div>
+          </a>
           <p>Free, open-source video compression for Mac. Built by an indie developer, not a startup.</p>
           <div class="footer-social">
             <a href="https://twitter.com/kellyyuweipeng" aria-label="Twitter">
@@ -1025,9 +1381,9 @@
         <div class="footer-col">
           <h6>Project</h6>
           <ul>
-            <li><a href="https://github.com/kellypeng/shrinkmaster">Source code</a></li>
-            <li><a href="https://github.com/kellypeng/shrinkmaster/issues">Report a bug</a></li>
-            <li><a href="https://github.com/kellypeng/shrinkmaster/blob/main/README.md">Docs</a></li>
+            <li><a href="https://github.com/kellypeng/shrinkmaster">Source</a></li>
+            <li><a href="https://github.com/kellypeng/shrinkmaster/issues">Bugs</a></li>
+            <li><a href="https://github.com/kellypeng/shrinkmaster/blob/main/README.md">README</a></li>
             <li><a href="https://github.com/kellypeng/shrinkmaster/blob/main/ARCHITECTURE.md">Architecture</a></li>
           </ul>
         </div>
@@ -1036,14 +1392,14 @@
           <h6>Author</h6>
           <ul>
             <li><a href="https://twitter.com/kellyyuweipeng">Twitter</a></li>
-            <li><a href="https://github.com/kellypeng">GitHub profile</a></li>
+            <li><a href="https://github.com/kellypeng">GitHub</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>Made by Kelly Peng (@kellyyuweipeng) · MIT licensed · © 2026</span>
-        <span>Built with ❤️ in Beijing</span>
+        <span>// Made by Kelly Peng (@kellyyuweipeng) · MIT · © 2026</span>
+        <span>// Built with ❤️ &amp; ffmpeg</span>
       </div>
     </div>
   </footer>
