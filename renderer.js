@@ -112,16 +112,16 @@ const I18N = {
     'enc.hwAccel': '[OK] HW Accelerated: {label}',
     'enc.cpuOnly': '[INFO] {label}',
 
-    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by @kellyyuweipeng. Got feedback?',
+    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by indie developer Kelly Peng (@kellyyuweipeng). Got feedback?',
     'welcome.action': 'Find me on Twitter →',
 
     'footer.localOnly': '100% local · open source',
-    'footer.madeBy': 'Made by @kellyyuweipeng',
+    'footer.madeBy': 'Made by Kelly Peng (@kellyyuweipeng)',
     'footer.star': 'Star on GitHub',
 
     'result.share': '📤 Share Result',
-    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
-    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
+    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
 
     'about.greeting': "Hi, I'm Kelly 👋",
     'about.body': "ShrinkMaster is a free, open-source side project. If it's been useful, a Star or follow on Twitter means a lot.",
@@ -241,16 +241,16 @@ const I18N = {
     'enc.hwAccel': '[已启用] 硬件加速：{label}',
     'enc.cpuOnly': '[提示] {label}',
 
-    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 @kellyyuweipeng 制作的开源副业项目。有反馈或建议？',
+    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 Kelly Peng (@kellyyuweipeng) 制作的开源副业项目。有反馈或建议？',
     'welcome.action': '在推特上找我 →',
 
     'footer.localOnly': '100% 本地 · 开源',
-    'footer.madeBy': '由 @kellyyuweipeng 制作',
+    'footer.madeBy': '由 Kelly Peng (@kellyyuweipeng) 制作',
     'footer.star': '在 GitHub 上点 Star',
 
     'result.share': '📤 分享结果',
-    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
-    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by @kellyyuweipeng',
+    'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
+    'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
 
     'about.greeting': '你好，我是 Kelly 👋',
     'about.body': 'ShrinkMaster 是我做的一个免费开源副业项目。如果它对你有用，欢迎 Star 项目或在推特上关注我。',
