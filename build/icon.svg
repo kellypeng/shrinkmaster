@@ -8,17 +8,12 @@
   </defs>
   <!-- Rounded square background, ~22% corner radius (matches modern macOS app icon shape) -->
   <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#bg)"/>
-  <!-- Brand mark, scaled from the 32-unit grid in index.html to fit a 1024 canvas with comfortable padding -->
-  <!-- Original viewBox is 0 0 32 32; we scale by 24 and translate to center (1024 - 32*24)/2 = 128 -->
-  <g transform="translate(128,128) scale(24)" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Stroke paths (downward arrow on left, upward arrow on right) -->
-    <path d="M10 7.5v6.2" stroke-width="2.4"/>
-    <path d="M7.2 10.3 10 7.5l2.8 2.8" stroke-width="2.4"/>
-    <path d="M22 24.5v-6.2" stroke-width="2.4"/>
-    <path d="M19.2 21.7 22 24.5l2.8-2.8" stroke-width="2.4"/>
-    <!-- Core stack lines -->
-    <path d="M8 14.5h16" stroke-width="2.6"/>
-    <path d="M10.5 17.5h11" stroke-width="2.6"/>
-    <path d="M13 20.5h6" stroke-width="2.6"/>
+  <!-- ShrinkMaster mark: corners contracting toward center (exit-fullscreen-style).
+       Source SVG (24×24) scaled by ~21.3 and centered: translate((1024 - 24*21.3)/2 = 256) -->
+  <g transform="translate(256,256) scale(21.333)" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"/>
+    <polyline points="9 21 3 21 3 15"/>
+    <line x1="21" y1="3" x2="14" y2="10"/>
+    <line x1="3" y1="21" x2="10" y2="14"/>
   </g>
 </svg>

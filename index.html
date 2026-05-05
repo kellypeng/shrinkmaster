@@ -99,19 +99,18 @@
       height: 56px;
     }
 
-    .brand-mark .mark-stroke {
+    .brand-mark {
       fill: none;
       stroke: #ffffff;
-      stroke-width: 2.4;
+      stroke-width: 2.6;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    .brand-mark .mark-core {
-      fill: none;
-      stroke: #dbeafe;
-      stroke-width: 2.2;
-      stroke-linecap: round;
+    /* Upload-screen variant sits on a light-blue tinted background, so use the brand color for the stroke instead of white */
+    .brand-mark.lg {
+      stroke: var(--primary);
+      stroke-width: 2.4;
     }
 
     .brand-name {
@@ -1227,14 +1226,11 @@
     <div class="header-inner">
       <div id="brandHomeBtn" class="brand">
         <div class="brand-icon" aria-hidden="true">
-          <svg class="brand-mark" viewBox="0 0 32 32" role="img" aria-label="ShrinkMaster logo">
-            <path class="mark-stroke" d="M10 7.5v6.2"></path>
-            <path class="mark-stroke" d="M7.2 10.3 10 7.5l2.8 2.8"></path>
-            <path class="mark-stroke" d="M22 24.5v-6.2"></path>
-            <path class="mark-stroke" d="M19.2 21.7 22 24.5l2.8-2.8"></path>
-            <path class="mark-core" d="M8 14.5h16"></path>
-            <path class="mark-core" d="M10.5 17.5h11"></path>
-            <path class="mark-core" d="M13 20.5h6"></path>
+          <svg class="brand-mark" viewBox="0 0 24 24" role="img" aria-label="ShrinkMaster logo">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
           </svg>
         </div>
         <div class="brand-name">Shrink<span class="brand-accent">Master</span></div>
@@ -1258,14 +1254,11 @@
       <div id="uploadSurface" class="upload-box">
         <div class="eyebrow-chip" data-i18n="home.tagline">Shrink Faster, Stay Crisp</div>
         <div class="upload-icon" aria-hidden="true">
-          <svg class="brand-mark lg" viewBox="0 0 32 32" role="img" aria-label="ShrinkMaster upload logo">
-            <path class="mark-stroke" d="M10 7.5v6.2"></path>
-            <path class="mark-stroke" d="M7.2 10.3 10 7.5l2.8 2.8"></path>
-            <path class="mark-stroke" d="M22 24.5v-6.2"></path>
-            <path class="mark-stroke" d="M19.2 21.7 22 24.5l2.8-2.8"></path>
-            <path class="mark-core" d="M8 14.5h16"></path>
-            <path class="mark-core" d="M10.5 17.5h11"></path>
-            <path class="mark-core" d="M13 20.5h6"></path>
+          <svg class="brand-mark lg" viewBox="0 0 24 24" role="img" aria-label="ShrinkMaster upload logo">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
           </svg>
         </div>
         <h2 data-i18n="home.dropPrompt">Drag and drop files here</h2>
