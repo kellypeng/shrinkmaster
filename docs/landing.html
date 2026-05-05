@@ -965,21 +965,20 @@
     /* ==============================================================
        CJK overrides
        --------------------------------------------------------------
-       Instrument Serif has no Chinese glyphs. When the language
-       is Chinese, the .serif accents would otherwise fall back to
-       a system Chinese font + synthetic italic (`font-style: italic`
-       slants the glyphs algorithmically), which produces uneven
-       baselines and stretched heights vs. the surrounding PingFang
-       sans. Italic is also not idiomatic in CJK typography.
-       Fix: swap to a real Chinese serif (Songti SC / Source Han
-       Serif), drop italic, match weight to the surrounding bold.
+       Instrument Serif has no Chinese glyphs, and Chinese serif
+       (Songti) + Chinese sans (PingFang) have different visual
+       metrics that never align cleanly on the same line. The
+       Western "italic-serif accent vs bold-sans body" pattern
+       just doesn't translate to CJK.
+       Solution: in Chinese, the .serif spans use the SAME font
+       and weight as the surrounding text — only the color changes.
        ============================================================== */
     html[lang="zh-CN"] .serif,
     html[lang="zh"] .serif {
-      font-family: "Songti SC", "Source Han Serif SC", "Noto Serif SC", "STSong", var(--sans);
+      font-family: inherit;
       font-style: normal;
-      font-weight: 700;
-      letter-spacing: 0;
+      font-weight: inherit;
+      letter-spacing: inherit;
     }
 
     /* CJK headlines: the heavy negative letter-spacing was tuned for
