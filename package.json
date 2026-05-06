@@ -66,8 +66,8 @@
     "h265",
     "av1"
   ],
-  "author": "ShrinkMaster",
-  "license": "ISC",
+  "author": "Kelly Peng",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "electron": "^40.6.1",

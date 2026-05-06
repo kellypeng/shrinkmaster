@@ -176,6 +176,6 @@ ShrinkMaster auto-detects the best available encoder at startup:
 
 ### License
 
-MIT. See [LICENSE](LICENSE) — wait, no LICENSE file yet. Add one. Until then, treat the code as MIT-licensed.
+[MIT](LICENSE). The bundled ffmpeg binaries shipped in macOS releases are under their own licenses (LGPL / GPL) — see the note at the bottom of [LICENSE](LICENSE).
 
 </details>
