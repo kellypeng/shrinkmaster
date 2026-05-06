@@ -195,8 +195,29 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 28px;
+      margin-bottom: 14px;
     }
+    .hero-follow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      padding: 4px 0;
+      margin-bottom: 14px;
+      transition: color 0.15s;
+    }
+    .hero-follow:hover { color: var(--accent); }
+    .hero-follow svg { opacity: 0.7; }
+    .hero-follow:hover svg { opacity: 1; }
+    .hero-follow-arrow {
+      display: inline-block;
+      transition: transform 0.15s;
+    }
+    .hero-follow:hover .hero-follow-arrow { transform: translateX(3px); }
     .btn {
       padding: 14px 22px;
       border-radius: 8px;
@@ -825,6 +846,58 @@
     }
 
     /* ==============================================================
+       STAY UPDATED (post-Maker Twitter follow card)
+       ============================================================== */
+    section.stay { padding-top: 60px; padding-bottom: 60px; }
+    .stay-card {
+      max-width: 820px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 28px 32px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .stay-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .stay-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin: 0 0 8px;
+    }
+    .stay-body {
+      color: var(--text-soft);
+      font-size: 14.5px;
+      line-height: 1.55;
+      margin: 0;
+      max-width: 480px;
+    }
+    .stay-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: var(--text);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .stay-cta:hover { background: var(--accent); }
+
+    /* ==============================================================
        FAQ
        ============================================================== */
     .faq-wrap {
@@ -1101,6 +1174,11 @@
             <span data-i18n="hero.cta2">Star on GitHub</span>
           </a>
         </div>
+        <a class="hero-follow" href="https://twitter.com/kellyyuweipeng" rel="noopener">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span data-i18n="hero.follow">Updates on Twitter — @kellyyuweipeng</span>
+          <span class="hero-follow-arrow">→</span>
+        </a>
       </div>
 
       <!-- Result card -->
@@ -1449,6 +1527,21 @@
       </div>
     </section>
 
+    <!-- ============== STAY UPDATED ============== -->
+    <section class="section bg-soft stay">
+      <div class="stay-card">
+        <div class="stay-text">
+          <div class="stay-eyebrow"><span data-i18n="stay.eyebrow">▎ What's next</span></div>
+          <h3 class="stay-title" data-i18n="stay.title">I ship more than just videos.</h3>
+          <p class="stay-body" data-i18n="stay.body">When I release a new tool, write about indie building, or open-source another side project, I post about it on Twitter first. Follow along.</p>
+        </div>
+        <a class="stay-cta" href="https://twitter.com/kellyyuweipeng" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span data-i18n="stay.cta">Follow @kellyyuweipeng</span>
+        </a>
+      </div>
+    </section>
+
     <!-- ============== FAQ ============== -->
     <section id="faq" class="section">
       <div class="section-head">
@@ -1517,6 +1610,10 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.96.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39s1.97.13 2.89.39c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
           <span data-i18n="cta.cta2">View on GitHub</span>
         </a>
+        <a class="btn ghost" href="https://twitter.com/kellyyuweipeng">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span data-i18n="cta.cta3">Follow for updates</span>
+        </a>
       </div>
       <div class="terminal">$ curl -L github.com/kellypeng/shrinkmaster/releases/latest</div>
     </section>
@@ -1580,6 +1677,7 @@
       "hero.lede":        { en: "A free, native Mac app that shrinks videos by 70–90% using H.265 or AV1. Hardware accelerated. 100% local. Nothing leaves your machine.", zh: "免费的原生 Mac 应用，使用 H.265 或 AV1 编码将视频体积压缩 70–90%。硬件加速。完全本地运行，文件永远不会离开你的电脑。" },
       "hero.cta1":        { en: "Download for Mac", zh: "下载 Mac 版" },
       "hero.cta2":        { en: "Star on GitHub", zh: "GitHub 关注" },
+      "hero.follow":      { en: "Updates on Twitter — @kellyyuweipeng", zh: "更新动态在推特 — @kellyyuweipeng" },
       "hero.spec.label":  { en: "size after H.265", zh: "H.265 压缩后" },
       "hero.spec.saved":  { en: "saved", zh: "节省" },
       "hero.spec.note":   { en: "* representative output, MacBook Pro M2, default settings", zh: "* 典型输出，MacBook Pro M2，默认设置" },
@@ -1650,6 +1748,11 @@
       "about.twitter":    { en: "Follow on Twitter", zh: "Twitter 关注" },
       "about.github":     { en: "Star on GitHub", zh: "GitHub Star" },
 
+      "stay.eyebrow":     { en: "▎ What's next", zh: "▎ 接下来" },
+      "stay.title":       { en: "I ship more than just videos.", zh: "我做的不止视频压缩。" },
+      "stay.body":        { en: "When I release a new tool, write about indie building, or open-source another side project, I post about it on Twitter first. Follow along.", zh: "做新工具、写独立开发、开源新副业，我都先发在推特上。一起跟进。" },
+      "stay.cta":         { en: "Follow @kellyyuweipeng", zh: "关注 @kellyyuweipeng" },
+
       "faq.eyebrow":      { en: "▎ Common questions", zh: "▎ 常见问题" },
       "faq.title":        { en: "Things people ask.", zh: "大家关心的事。" },
       "faq.q1.q":         { en: "Is it really free?", zh: "真的免费吗？" },
@@ -1670,6 +1773,7 @@
       "cta.lede":         { en: "Universal Mac app, ~80 MB. Big Sur or later. Drop a video, get one back, smaller.", zh: "通用 Mac 应用，约 80 MB。Big Sur 及以上。拖入视频，拿回一个更小的版本。" },
       "cta.cta1":         { en: "Download for Mac", zh: "下载 Mac 版" },
       "cta.cta2":         { en: "View on GitHub", zh: "查看 GitHub" },
+      "cta.cta3":         { en: "Follow for updates", zh: "关注获取更新" },
 
       "footer.tagline":   { en: "A small Mac app that compresses video. Local, free, open source.", zh: "一个小巧的 Mac 视频压缩工具。本地、免费、开源。" },
       "footer.product":   { en: "Product", zh: "产品" },
