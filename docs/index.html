@@ -1075,6 +1075,26 @@
     }
 
     /* ==============================================================
+       Headline wrapping — kill orphan words on the last line
+       --------------------------------------------------------------
+       text-wrap: balance asks the browser to distribute words evenly
+       across lines instead of greedy-filling line-by-line. Eliminates
+       cases like "Built for the way Mac users actually" / "work." —
+       the browser instead splits more evenly e.g. "Built for the way"
+       / "Mac users actually work." Works in Chrome 114+, Safari 17.4+,
+       Firefox 121+. Older browsers fall back to default wrapping.
+       Effective on CJK too (per-character balancing).
+       ============================================================== */
+    h1.hero-title,
+    .section-head h2,
+    .appshot-wrap h2,
+    section.cta h2,
+    .firstrun-card h3,
+    .stay-title {
+      text-wrap: balance;
+    }
+
+    /* ==============================================================
        Responsive
        ============================================================== */
     @media (max-width: 920px) {
