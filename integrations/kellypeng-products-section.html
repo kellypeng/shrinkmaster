@@ -1,0 +1,255 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════════╗
+  ║  Drop-in "Products" section for KellyPeng.com                          ║
+  ║                                                                        ║
+  ║  Self-contained HTML + scoped CSS. Nothing leaks outside .km-products. ║
+  ║  Bilingual (EN + 中文) — text auto-swaps based on:                      ║
+  ║    1. <html lang="zh-CN"> on the document, OR                          ║
+  ║    2. localStorage["km.lang"] = "en" | "zh", OR                        ║
+  ║    3. browser locale.                                                  ║
+  ║  Match this to whatever lang signal your existing EN/中 toggle uses     ║
+  ║  by setting body.km-lang="en" / "zh" or document.documentElement.lang. ║
+  ║                                                                        ║
+  ║  Where to put it: between "Featured Work" (the book) and "Services".   ║
+  ║  That ordering reads as: who I am → what I've made → what I sell.      ║
+  ╚══════════════════════════════════════════════════════════════════════╝
+-->
+
+<section class="km-products" aria-labelledby="km-products-heading">
+  <div class="km-products-inner">
+
+    <header class="km-products-head">
+      <div class="km-products-eyebrow" data-i18n-en="Products" data-i18n-zh="产品">Products</div>
+      <h2 id="km-products-heading" class="km-products-title"
+          data-i18n-en="Things I've shipped."
+          data-i18n-zh="我做过的产品。">Things I've shipped.</h2>
+      <p class="km-products-lede"
+         data-i18n-en="Software I built to scratch my own itch — released free and open."
+         data-i18n-zh="为解决自己问题做的软件。免费开源。">Software I built to scratch my own itch — released free and open.</p>
+    </header>
+
+    <div class="km-products-list">
+
+      <!-- ============== ShrinkMaster card ============== -->
+      <a class="km-product" href="https://shrinkmaster.kellypeng.com" target="_blank" rel="noopener">
+        <div class="km-product-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/>
+            <polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+            <line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </div>
+        <div class="km-product-body">
+          <div class="km-product-row">
+            <h3 class="km-product-name">ShrinkMaster</h3>
+            <div class="km-product-tags">
+              <span class="km-tag" data-i18n-en="macOS" data-i18n-zh="macOS">macOS</span>
+              <span class="km-tag km-tag-ok" data-i18n-en="Free" data-i18n-zh="免费">Free</span>
+              <span class="km-tag" data-i18n-en="Open source" data-i18n-zh="开源">Open source</span>
+            </div>
+          </div>
+          <p class="km-product-desc"
+             data-i18n-en="A free, native Mac app that shrinks videos by 70–90% using H.265 or AV1. Hardware accelerated. 100% local."
+             data-i18n-zh="免费的原生 Mac 视频压缩工具，使用 H.265 或 AV1 编码，体积可缩减 70-90%。硬件加速，完全本地运行。">A free, native Mac app that shrinks videos by 70–90% using H.265 or AV1. Hardware accelerated. 100% local.</p>
+          <div class="km-product-link">
+            <span data-i18n-en="Visit site" data-i18n-zh="访问网站">Visit site</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- ============== Add future products as additional <a class="km-product"> cards below ============== -->
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Scoped styles. All selectors are prefixed `.km-` so they won't collide with your site's CSS. -->
+<style>
+  .km-products {
+    /* Inherit your site's typography stack. Falls back to a clean sans if your stack isn't on the element. */
+    font-family: inherit;
+    color: #0a0a0a;
+    padding: 80px 24px;
+    background: #fff;
+  }
+  .km-products *,
+  .km-products *::before,
+  .km-products *::after { box-sizing: border-box; }
+
+  .km-products-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .km-products-head {
+    margin-bottom: 40px;
+  }
+  .km-products-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .km-products-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    color: #0a0a0a;
+  }
+  .km-products-lede {
+    font-size: 17px;
+    line-height: 1.55;
+    color: #555;
+    margin: 0;
+    max-width: 580px;
+  }
+
+  .km-products-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .km-product {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    padding: 26px 26px;
+    background: #fff;
+    border: 1px solid #e8e6df;
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .km-product:hover {
+    border-color: #0a0a0a;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(10, 10, 10, 0.06);
+  }
+
+  .km-product-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: linear-gradient(155deg, #2f7df6 0%, #1665e8 100%);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 18px rgba(22, 101, 232, 0.22);
+    flex-shrink: 0;
+  }
+  .km-product-icon svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
+
+  .km-product-body {
+    min-width: 0;
+  }
+  .km-product-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .km-product-name {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: #0a0a0a;
+  }
+  .km-product-tags {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .km-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #f4f2ed;
+    color: #555;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .km-tag-ok {
+    background: rgba(22, 101, 232, 0.1);
+    color: #1665e8;
+  }
+  .km-product-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: #444;
+    margin: 0 0 12px;
+  }
+  .km-product-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1665e8;
+  }
+  .km-product-link svg { transition: transform 0.18s ease; }
+  .km-product:hover .km-product-link svg { transform: translateX(3px); }
+
+  /* Chinese rendering tweaks: looser tracking on Chinese headlines */
+  html[lang^="zh"] .km-products-title,
+  body.km-lang-zh .km-products-title {
+    letter-spacing: -0.005em;
+  }
+
+  @media (max-width: 600px) {
+    .km-products { padding: 56px 20px; }
+    .km-product { grid-template-columns: 1fr; gap: 14px; padding: 22px; }
+    .km-product-icon { width: 52px; height: 52px; }
+    .km-product-icon svg { width: 24px; height: 24px; }
+  }
+</style>
+
+<script>
+  // i18n: read locale from <html lang>, body.km-lang-en / km-lang-zh, localStorage["km.lang"], or navigator.language.
+  // If your site already has a way to set locale, just make sure document.documentElement.lang gets set to "en" / "zh-CN".
+  (function () {
+    function detectLang() {
+      var bodyLang = document.body.classList.contains('km-lang-zh') ? 'zh' :
+                     document.body.classList.contains('km-lang-en') ? 'en' : null;
+      if (bodyLang) return bodyLang;
+      var htmlLang = (document.documentElement.lang || '').toLowerCase();
+      if (htmlLang.indexOf('zh') === 0) return 'zh';
+      if (htmlLang.indexOf('en') === 0) return 'en';
+      var saved = null;
+      try { saved = localStorage.getItem('km.lang'); } catch (e) {}
+      if (saved === 'en' || saved === 'zh') return saved;
+      return (navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    }
+
+    function applyLang(lang) {
+      document.querySelectorAll('.km-products [data-i18n-' + lang + ']').forEach(function (el) {
+        var txt = el.getAttribute('data-i18n-' + lang);
+        if (txt) el.textContent = txt;
+      });
+    }
+
+    applyLang(detectLang());
+
+    // If your site dispatches a custom event when language changes, listen here:
+    document.addEventListener('km:langchange', function (e) {
+      applyLang(e.detail === 'zh' ? 'zh' : 'en');
+    });
+  })();
+</script>
