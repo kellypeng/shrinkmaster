@@ -982,9 +982,14 @@
     }
 
     /* CJK headlines: the heavy negative letter-spacing was tuned for
-       Latin display type and crowds Chinese glyphs. Ease it up. */
+       Latin display type and crowds Chinese glyphs. Ease it up.
+       Also drop the hero font-size: at 88px the second line
+       "就这么简单。" overflows the ~506px hero column, wrapping
+       and orphaning the punctuation onto a third line. 72px keeps
+       the display weight while keeping each line whole. */
     html[lang="zh-CN"] h1.hero-title,
     html[lang="zh"] h1.hero-title {
+      font-size: 72px;
       letter-spacing: -0.02em;
     }
     html[lang="zh-CN"] .section-head h2,
@@ -1006,6 +1011,8 @@
       }
       section.hero { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; padding-bottom: 40px; }
       h1.hero-title { font-size: 56px; }
+      html[lang="zh-CN"] h1.hero-title,
+      html[lang="zh"] h1.hero-title { font-size: 48px; }
       .result-after { font-size: 64px; }
       .result-after .unit { font-size: 24px; }
       .features-grid, .usecases-grid { grid-template-columns: 1fr; }
@@ -1020,6 +1027,8 @@
     }
     @media (max-width: 560px) {
       h1.hero-title { font-size: 44px; }
+      html[lang="zh-CN"] h1.hero-title,
+      html[lang="zh"] h1.hero-title { font-size: 38px; }
       .result-after { font-size: 48px; }
       .spec-table-head, .spec-row { grid-template-columns: 1.6fr 1fr 1fr; }
       .spec-row .codec-cell, .spec-table-head .col-codec { display: none; }
