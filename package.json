@@ -29,6 +29,7 @@
         { "target": "dmg", "arch": ["universal"] },
         { "target": "zip", "arch": ["universal"] }
       ],
+      "artifactName": "${productName}-mac-${arch}.${ext}",
       "category": "public.app-category.video",
       "icon": "build/icon.icns",
       "identity": null,
