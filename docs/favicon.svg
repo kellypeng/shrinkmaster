@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e6cff"/>
+      <stop offset="100%" stop-color="#1455be"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background, ~22% corner radius (matches modern macOS app icon shape) -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#bg)"/>
+  <!-- ShrinkMaster mark: corners contracting toward center (exit-fullscreen-style).
+       Source SVG (24×24) scaled by ~21.3 and centered: translate((1024 - 24*21.3)/2 = 256) -->
+  <g transform="translate(256,256) scale(21.333)" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"/>
+    <polyline points="9 21 3 21 3 15"/>
+    <line x1="21" y1="3" x2="14" y2="10"/>
+    <line x1="3" y1="21" x2="10" y2="14"/>
+  </g>
+</svg>
