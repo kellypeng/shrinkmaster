@@ -195,22 +195,19 @@
       transform: translateY(-1px);
     }
 
+    /* .btn-link uses the SAME base as .btn (so font-size, weight, padding,
+       and border-radius can never drift). Only the background and color
+       change to make it a tertiary/transparent button. */
     .btn-link {
-      border: 0;
       background: transparent;
       color: #64748b;
-      font-family: inherit;
-      font-size: 1.85rem;
-      line-height: 1;
-      font-weight: 750;
-      cursor: pointer;
-      padding: 13px 14px;
-      border-radius: 12px;
+      box-shadow: none;
     }
 
-    .btn-link:hover {
+    .btn-link:hover:not(:disabled) {
       background: #eef2f7;
       color: #334155;
+      transform: none;
     }
 
     .app-main {
@@ -1239,7 +1236,7 @@
       </div>
       <div class="header-actions">
         <button id="addVideosBtn" class="btn btn-files" type="button" data-i18n="header.selectFiles">Select Files</button>
-        <button id="advancedToggleBtn" class="btn-link" type="button" data-i18n="header.advancedSettings">Advanced Settings</button>
+        <button id="advancedToggleBtn" class="btn btn-link" type="button" data-i18n="header.advancedSettings">Advanced Settings</button>
       </div>
     </div>
   </header>
@@ -1431,7 +1428,7 @@
   <aside id="advancedPanel" class="advanced-panel" aria-hidden="true">
     <div class="panel-head">
       <h4 data-i18n="adv.title">Advanced Settings</h4>
-      <button id="advancedCloseBtn" class="btn-link" type="button" data-i18n="adv.close">Close</button>
+      <button id="advancedCloseBtn" class="btn btn-link" type="button" data-i18n="adv.close">Close</button>
     </div>
     <div class="panel-body">
       <div class="form-group">
