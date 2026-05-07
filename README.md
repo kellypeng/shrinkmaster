@@ -139,6 +139,16 @@ npm start
 
 ### Build a macOS release
 
+For a full release (build + upload + tag handling), use:
+
+```bash
+./scripts/release.sh
+```
+
+That script kills running instances, regenerates the icon, builds the DMG, and uploads with `--clobber` to the existing GitHub Release matching `package.json` version. See [`CLAUDE.md`](CLAUDE.md) for the full deploy model (which changes need a rebuild and which are web-only).
+
+For a manual build without uploading:
+
 ```bash
 ./scripts/build-icon.sh        # generates build/icon.icns from build/icon.svg
 ./download_ffmpeg_macos.sh     # universal2 ffmpeg + ffprobe (~260 MB total)
