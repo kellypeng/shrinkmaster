@@ -79,9 +79,13 @@ const I18N = {
     'adv.codecAv1': 'AV1 — Smaller Files',
     'adv.resolution': 'Resolution',
     'adv.resOriginal': 'Original (no resize)',
-    'adv.crf': 'Quality (CRF)',
-    'adv.crfLow': '0 (lossless)',
-    'adv.crfHigh': '51 (worst)',
+    'adv.quality': 'Quality',
+    'adv.qBest': 'Best',
+    'adv.qBestMeta': '~70% size · visually lossless',
+    'adv.qBalanced': 'Balanced',
+    'adv.qBalancedMeta': '~40% size · near-lossless',
+    'adv.qSmallest': 'Smallest',
+    'adv.qSmallestMeta': '~15% size · visible loss',
     'adv.preset': 'Speed Preset',
     'adv.compressNow': 'Compress Now',
     'adv.log': 'Activity Log',
@@ -208,9 +212,13 @@ const I18N = {
     'adv.codecAv1': 'AV1 — 文件更小',
     'adv.resolution': '分辨率',
     'adv.resOriginal': '保持原始（不缩放）',
-    'adv.crf': '画质 (CRF)',
-    'adv.crfLow': '0（无损）',
-    'adv.crfHigh': '51（最差）',
+    'adv.quality': '画质',
+    'adv.qBest': '最佳画质',
+    'adv.qBestMeta': '约 70% 体积 · 视觉无损',
+    'adv.qBalanced': '平衡',
+    'adv.qBalancedMeta': '约 40% 体积 · 接近无损',
+    'adv.qSmallest': '最小体积',
+    'adv.qSmallestMeta': '约 15% 体积 · 可见损失',
     'adv.preset': '速度预设',
     'adv.compressNow': '开始压缩',
     'adv.log': '运行日志',
@@ -370,10 +378,20 @@ const aboutUpdateResult = document.getElementById('aboutUpdateResult');
 const codecSelect = document.getElementById('codecSelect');
 const encoderNotices = document.getElementById('encoderNotices');
 const resolutionSelect = document.getElementById('resolutionSelect');
-const crfSlider = document.getElementById('crfSlider');
-const crfValueEl = document.getElementById('crfValue');
+const qualityPresetsEl = document.getElementById('qualityPresets');
 const presetSlider = document.getElementById('presetSlider');
 const presetValueEl = document.getElementById('presetValue');
+
+// Quality preset → CRF mapping. The CRF interpretation is consistent across
+// libx265 / libsvtav1 / libaom-av1 (lower = higher quality, larger file).
+// VideoToolbox encoders re-map this internally in main.js.
+const QUALITY_PRESETS = {
+  best:     { crf: 18, label: 'Best' },
+  balanced: { crf: 22, label: 'Balanced' },
+  smallest: { crf: 28, label: 'Smallest' },
+};
+const DEFAULT_QUALITY = 'balanced';
+let currentQuality = DEFAULT_QUALITY;
 
 // ========================
 // State
@@ -640,12 +658,15 @@ function collectSettings() {
   const codec = codecSelect.value === 'av1' ? hw.bestAv1.id : hw.bestH265.id;
   const presetIndex = parseInt(presetSlider.value, 10);
 
+  const qualityCrf = (QUALITY_PRESETS[currentQuality] || QUALITY_PRESETS[DEFAULT_QUALITY]).crf;
+
   return {
     codec,
     resolution: resolutionSelect.value,
-    crf: parseInt(crfSlider.value, 10),
+    crf: qualityCrf,
     presetIndex,
     preset: PRESET_NAMES[presetIndex],
+    qualityPreset: currentQuality,
   };
 }
 
@@ -963,9 +984,33 @@ window.electronAPI.onFfmpegStderr((data) => {
 // ========================
 // Controls
 // ========================
-crfSlider.addEventListener('input', () => {
-  crfValueEl.textContent = crfSlider.value;
-});
+function selectQualityPreset(name) {
+  if (!QUALITY_PRESETS[name]) name = DEFAULT_QUALITY;
+  currentQuality = name;
+  if (qualityPresetsEl) {
+    qualityPresetsEl.querySelectorAll('.quality-preset').forEach((btn) => {
+      const isSel = btn.getAttribute('data-preset') === name;
+      btn.classList.toggle('selected', isSel);
+      btn.setAttribute('aria-checked', isSel ? 'true' : 'false');
+    });
+  }
+  try { localStorage.setItem('shrinkmaster.quality', name); } catch (e) {}
+}
+
+if (qualityPresetsEl) {
+  qualityPresetsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quality-preset');
+    if (!btn) return;
+    selectQualityPreset(btn.getAttribute('data-preset'));
+  });
+}
+
+// Restore saved quality on load (default to "balanced")
+(function loadSavedQuality() {
+  let saved = null;
+  try { saved = localStorage.getItem('shrinkmaster.quality'); } catch (e) {}
+  selectQualityPreset(saved && QUALITY_PRESETS[saved] ? saved : DEFAULT_QUALITY);
+})();
 
 presetSlider.addEventListener('input', () => {
   presetValueEl.textContent = PRESET_NAMES[parseInt(presetSlider.value, 10)];

@@ -1087,6 +1087,55 @@
       line-height: 1.35;
     }
 
+    .quality-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .quality-preset {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.15s;
+      font-family: inherit;
+    }
+
+    .quality-preset:hover {
+      border-color: var(--primary);
+    }
+
+    .quality-preset.selected {
+      border-color: var(--primary);
+      background: rgba(22, 101, 232, 0.07);
+    }
+
+    .qp-label {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+      letter-spacing: -0.005em;
+    }
+
+    .quality-preset.selected .qp-label {
+      color: var(--primary);
+    }
+
+    .qp-meta {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .quality-preset.selected .qp-meta {
+      color: rgba(22, 101, 232, 0.78);
+    }
+
     .slider {
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -1469,15 +1518,21 @@
         </select>
       </div>
 
-      <div class="slider">
-        <div class="slider-head">
-          <label data-i18n="adv.crf">Quality (CRF)</label>
-          <b id="crfValue">28</b>
-        </div>
-        <input type="range" id="crfSlider" min="0" max="51" value="28" />
-        <div class="slider-labels">
-          <span data-i18n="adv.crfLow">0 (lossless)</span>
-          <span data-i18n="adv.crfHigh">51 (worst)</span>
+      <div class="form-group">
+        <label data-i18n="adv.quality">Quality</label>
+        <div class="quality-presets" id="qualityPresets" role="radiogroup" aria-label="Quality preset">
+          <button type="button" class="quality-preset" data-preset="best" role="radio" aria-checked="false">
+            <div class="qp-label" data-i18n="adv.qBest">Best</div>
+            <div class="qp-meta" data-i18n="adv.qBestMeta">~70% size · visually lossless</div>
+          </button>
+          <button type="button" class="quality-preset selected" data-preset="balanced" role="radio" aria-checked="true">
+            <div class="qp-label" data-i18n="adv.qBalanced">Balanced</div>
+            <div class="qp-meta" data-i18n="adv.qBalancedMeta">~40% size · near-lossless</div>
+          </button>
+          <button type="button" class="quality-preset" data-preset="smallest" role="radio" aria-checked="false">
+            <div class="qp-label" data-i18n="adv.qSmallest">Smallest</div>
+            <div class="qp-meta" data-i18n="adv.qSmallestMeta">~15% size · visible loss</div>
+          </button>
         </div>
       </div>
 
