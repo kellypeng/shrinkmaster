@@ -14,7 +14,7 @@
 
 ## What it does
 
-ShrinkMaster takes a video on your Mac and re-encodes it so it takes up much less space — usually **70-90% less** — without making it look noticeably worse.
+ShrinkMaster re-encodes your video so it looks exactly the same — and takes up 70–90% less space.
 
 A typical example:
 
