@@ -855,7 +855,9 @@
       margin: 0 0 14px;
       max-width: 540px;
     }
-    .maker-actions { display: flex; gap: 8px; }
+    .maker-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    [lang="zh-CN"] .maker-actions a[href="https://kellypeng.com"] { background: var(--accent); color: #fff; border-color: transparent; }
+    [lang="zh-CN"] .maker-actions a[href="https://github.com/kellypeng/shrinkmaster"] { background: #fff; color: var(--text); border: 1px solid var(--border-strong); }
     .pill-btn {
       display: inline-flex;
       align-items: center;
@@ -1173,7 +1175,7 @@
             <span data-i18n="hero.cta2">Star on GitHub</span>
           </a>
         </div>
-        <a class="hero-follow" href="https://twitter.com/kellyyuweipeng" rel="noopener">
+        <a class="hero-follow" href="https://twitter.com/kellyyuweipeng" rel="noopener" data-i18n-href="hero.follow.href">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span data-i18n="hero.follow">Made by @kellyyuweipeng — follow on X</span>
           <span class="hero-follow-arrow">→</span>
@@ -1665,7 +1667,8 @@
       "hero.lede":        { en: "A free, native Mac app that compresses video with no visible quality loss — 70–90% smaller, using H.265 or AV1. Hardware accelerated. 100% local. Nothing leaves your machine.", zh: "免费的原生 Mac 应用，视觉无损压缩视频 — 体积缩小 70–90%，使用 H.265 或 AV1 编码。硬件加速。完全本地运行，文件永远不会离开你的电脑。" },
       "hero.cta1":        { en: "Download for Mac", zh: "下载 Mac 版" },
       "hero.cta2":        { en: "Star on GitHub", zh: "GitHub 关注" },
-      "hero.follow":      { en: "Made by @kellyyuweipeng — follow on X", zh: "由 @kellyyuweipeng 制作 — 来 X 关注" },
+      "hero.follow":      { en: "Made by @kellyyuweipeng — follow on X", zh: "由 Kelly Peng 制作 — 查看更多" },
+      "hero.follow.href": { en: "https://twitter.com/kellyyuweipeng", zh: "https://kellypeng.com" },
       "hero.spec.label":  { en: "size after H.265", zh: "H.265 压缩后" },
       "hero.spec.saved":  { en: "saved", zh: "节省" },
       "hero.spec.note":   { en: "* representative output, MacBook Pro M2, default settings", zh: "* 典型输出，MacBook Pro M2，默认设置" },
@@ -1776,6 +1779,11 @@
         const key = el.getAttribute("data-i18n");
         const entry = I18N[key];
         if (entry) el.textContent = (entry[lang] !== undefined ? entry[lang] : entry.en);
+      });
+      document.querySelectorAll("[data-i18n-href]").forEach(el => {
+        const key = el.getAttribute("data-i18n-href");
+        const entry = I18N[key];
+        if (entry) el.href = (entry[lang] !== undefined ? entry[lang] : entry.en);
       });
       document.querySelectorAll(".lang button").forEach(b => {
         b.classList.toggle("active", b.getAttribute("data-lang") === lang);

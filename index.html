@@ -4,8 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShrinkMaster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
+      --sans: Inter, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "PingFang SC", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
       --bg: #f3f4f6;
       --panel: #ffffff;
       --text: #0f172a;
@@ -37,7 +42,7 @@
     }
 
     body {
-      font-family: Inter, "Segoe UI", sans-serif;
+      font-family: var(--sans);
       background:
         radial-gradient(680px 280px at 8% 5%, rgba(22, 101, 232, 0.12), transparent 70%),
         radial-gradient(560px 260px at 95% 95%, rgba(22, 101, 232, 0.08), transparent 70%),
@@ -167,6 +172,22 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .header-made-by {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+    .header-made-by:hover {
+      color: var(--primary);
+      background: rgba(22, 101, 232, 0.06);
     }
 
     .btn {
@@ -1153,7 +1174,7 @@
     .slider-head b {
       font-size: 1.35rem;
       color: #1665e8;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: var(--mono);
     }
 
     input[type="range"] {
@@ -1197,7 +1218,7 @@
       min-height: 120px;
       max-height: 180px;
       overflow: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: var(--mono);
     }
 
     .log-stdout { color: #d1fae5; }
@@ -1284,6 +1305,7 @@
         <div class="plan-badge" data-i18n="brand.badge">Desktop App</div>
       </div>
       <div class="header-actions">
+        <a id="headerMadeBy" class="header-made-by" data-href="website" data-i18n="header.madeBy">Made by Kelly Peng →</a>
         <button id="addVideosBtn" class="btn btn-files" type="button" data-i18n="header.selectFiles">Select Files</button>
         <button id="advancedToggleBtn" class="btn btn-link" type="button" data-i18n="header.advancedSettings">Advanced Settings</button>
       </div>
@@ -1291,7 +1313,7 @@
   </header>
 
   <div id="welcomeBanner" class="welcome-banner hidden" role="status">
-    <span class="welcome-banner-text" data-i18n="welcome.text">👋 Welcome — ShrinkMaster is a free, open-source side project by indie developer <b>Kelly Peng (@kellyyuweipeng)</b>. Got feedback?</span>
+    <span class="welcome-banner-text" data-i18n="welcome.text">👋 Welcome — ShrinkMaster is a free, open-source project by indie developer Kelly Peng. Connect with Kelly?</span>
     <a id="welcomeBannerAction" class="welcome-banner-action" data-i18n="welcome.action">Find me on Twitter →</a>
     <button id="welcomeBannerClose" class="welcome-banner-close" aria-label="Dismiss" type="button">×</button>
   </div>

@@ -9,6 +9,7 @@ const I18N = {
     'brand.badge': 'Desktop App',
     'header.selectFiles': 'Select Files',
     'header.advancedSettings': 'Advanced Settings',
+    'header.madeBy': 'Made by Kelly Peng →',
 
     'home.tagline': 'Shrink Faster, Stay Crisp',
     'home.dropPrompt': 'Drag and drop files here',
@@ -116,7 +117,7 @@ const I18N = {
     'enc.hwAccel': '[OK] HW Accelerated: {label}',
     'enc.cpuOnly': '[INFO] {label}',
 
-    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by indie developer Kelly Peng. Got feedback?',
+    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source project by indie developer Kelly Peng. Connect with Kelly?',
     'welcome.action': 'Visit kellypeng.com →',
 
     'footer.localOnly': '100% local · open source',
@@ -142,6 +143,7 @@ const I18N = {
     'brand.badge': '桌面应用',
     'header.selectFiles': '选择文件',
     'header.advancedSettings': '高级设置',
+    'header.madeBy': '由 Kelly Peng 制作 →',
 
     'home.tagline': '更快压缩，画质依旧',
     'home.dropPrompt': '把视频拖到这里',
@@ -249,7 +251,7 @@ const I18N = {
     'enc.hwAccel': '[已启用] 硬件加速：{label}',
     'enc.cpuOnly': '[提示] {label}',
 
-    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 Kelly Peng 制作的开源副业项目。有反馈或建议？',
+    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者凯莉彭制作的开源项目。链接凯莉？',
     'welcome.action': '访问 kellypeng.com →',
 
     'footer.localOnly': '100% 本地 · 开源',
@@ -260,9 +262,9 @@ const I18N = {
     'share.singleTweet': 'Just shrunk a video by {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
     'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
 
-    'about.greeting': '你好，我是 Kelly 👋',
+    'about.greeting': '你好，我是凯莉 👋',
     'about.body': 'ShrinkMaster 是我做的一个免费开源副业项目。如果它对你有用，欢迎 Star 项目或访问我的个人网站。',
-    'about.followTwitter': '关注作者其他项目 →',
+    'about.followTwitter': '关注我的其他项目 →',
     'about.star': '给项目点 Star',
     'about.versionPrefix': '版本',
     'about.checkUpdate': '检查更新',
