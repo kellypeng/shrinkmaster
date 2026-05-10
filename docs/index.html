@@ -1099,6 +1099,9 @@
       .vs-head, .vs-row { padding-left: 14px; padding-right: 14px; }
       .vs-head { font-size: 10px; }
     }
+    .icon-website { display: none; vertical-align: middle; }
+    [lang="zh-CN"] .icon-twitter { display: none; }
+    [lang="zh-CN"] .icon-website { display: inline-block; }
     @media (max-width: 560px) {
       h1.hero-title { font-size: 44px; }
       html[lang="zh-CN"] h1.hero-title,
@@ -1133,9 +1136,10 @@
         <a href="#features" class="nav-link" data-i18n="nav.features">Features</a>
         <a href="#examples" class="nav-link" data-i18n="nav.examples">Examples</a>
         <a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a>
-        <a href="https://twitter.com/kellyyuweipeng" class="nav-icon-link" rel="noopener">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          Twitter
+        <a href="https://twitter.com/kellyyuweipeng" class="nav-icon-link" rel="noopener" data-i18n-href="links.social.href">
+          <svg class="icon-twitter" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg class="icon-website" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span data-i18n="nav.social">Twitter</span>
         </a>
         <a href="https://github.com/kellypeng/shrinkmaster" class="nav-icon-link" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.96.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39s1.97.13 2.89.39c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
@@ -1176,7 +1180,8 @@
           </a>
         </div>
         <a class="hero-follow" href="https://twitter.com/kellyyuweipeng" rel="noopener" data-i18n-href="hero.follow.href">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg class="icon-twitter" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg class="icon-website" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span data-i18n="hero.follow">Made by @kellyyuweipeng — follow on X</span>
           <span class="hero-follow-arrow">→</span>
         </a>
@@ -1515,8 +1520,9 @@
           <div class="maker-name">Kelly Peng</div>
           <p class="maker-bio" data-i18n="about.bio">I built ShrinkMaster because I have a lot of video files over 10 GB. They won't fit in email. Uploading them anywhere takes forever. And keeping them eats through expensive hard drives. So I built it for myself.</p>
           <div class="maker-actions">
-            <a class="pill-btn outline" href="https://twitter.com/kellyyuweipeng">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <a class="pill-btn outline" href="https://twitter.com/kellyyuweipeng" data-i18n-href="links.social.href">
+              <svg class="icon-twitter" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <svg class="icon-website" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               <span data-i18n="about.twitter">Follow on Twitter</span>
             </a>
             <a class="pill-btn filled" href="https://github.com/kellypeng/shrinkmaster">
@@ -1600,8 +1606,9 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.96.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39s1.97.13 2.89.39c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
           <span data-i18n="cta.cta2">View on GitHub</span>
         </a>
-        <a class="btn ghost" href="https://twitter.com/kellyyuweipeng">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <a class="btn ghost" href="https://twitter.com/kellyyuweipeng" data-i18n-href="links.social.href">
+          <svg class="icon-twitter" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg class="icon-website" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span data-i18n="cta.cta3">Follow the developer</span>
         </a>
       </div>
@@ -1637,7 +1644,7 @@
           <ul>
             <li><a href="https://github.com/kellypeng/shrinkmaster" data-i18n="footer.source">Source code</a></li>
             <li><a href="https://github.com/kellypeng/shrinkmaster/issues" data-i18n="footer.issues">Issues</a></li>
-            <li><a href="https://twitter.com/kellyyuweipeng" data-i18n="footer.twitter">Twitter / X</a></li>
+            <li><a href="https://twitter.com/kellyyuweipeng" data-i18n="footer.twitter" data-i18n-href="links.social.href">Twitter / X</a></li>
           </ul>
         </div>
         <div></div>
@@ -1669,6 +1676,8 @@
       "hero.cta2":        { en: "Star on GitHub", zh: "GitHub 关注" },
       "hero.follow":      { en: "Made by @kellyyuweipeng — follow on X", zh: "由 Kelly Peng 制作 — 查看更多" },
       "hero.follow.href": { en: "https://twitter.com/kellyyuweipeng", zh: "https://kellypeng.com" },
+      "links.social.href":{ en: "https://twitter.com/kellyyuweipeng", zh: "https://kellypeng.com" },
+      "nav.social":       { en: "Twitter", zh: "个人网站" },
       "hero.spec.label":  { en: "size after H.265", zh: "H.265 压缩后" },
       "hero.spec.saved":  { en: "saved", zh: "节省" },
       "hero.spec.note":   { en: "* representative output, MacBook Pro M2, default settings", zh: "* 典型输出，MacBook Pro M2，默认设置" },
@@ -1736,7 +1745,7 @@
 
       "about.eyebrow":    { en: "Builder · Author · Creator", zh: "独立开发者 · 写作者 · 创作者" },
       "about.bio":        { en: "I built ShrinkMaster because I have a lot of video files over 10 GB. They won't fit in email. Uploading them anywhere takes forever. And keeping them eats through expensive hard drives. So I built it for myself.", zh: "做 ShrinkMaster 是因为我手里有不少 10GB 以上的视频文件。邮件发不出去。传哪儿都慢得离谱。硬盘也得不停往上加。所以给自己写了一个。" },
-      "about.twitter":    { en: "Follow on Twitter", zh: "Twitter 关注" },
+      "about.twitter":    { en: "Follow on Twitter", zh: "访问个人网站" },
       "about.github":     { en: "Star on GitHub", zh: "GitHub Star" },
       "about.website":    { en: "More at kellypeng.com", zh: "更多内容 → kellypeng.com" },
 
@@ -1760,7 +1769,7 @@
       "cta.lede":         { en: "Universal Mac app, ~80 MB. Big Sur or later. Drop a video, get one back, smaller.", zh: "通用 Mac 应用，约 80 MB。Big Sur 及以上。拖入视频，拿回一个更小的版本。" },
       "cta.cta1":         { en: "Download for Mac", zh: "下载 Mac 版" },
       "cta.cta2":         { en: "View on GitHub", zh: "查看 GitHub" },
-      "cta.cta3":         { en: "Follow the developer", zh: "关注开发者" },
+      "cta.cta3":         { en: "Follow the developer", zh: "访问个人网站" },
 
       "footer.tagline":   { en: "A small Mac app that compresses video. Local, free, open source.", zh: "一个小巧的 Mac 视频压缩工具。本地、免费、开源。" },
       "footer.product":   { en: "Product", zh: "产品" },
@@ -1770,7 +1779,7 @@
       "footer.releases":  { en: "Releases", zh: "版本历史" },
       "footer.source":    { en: "Source code", zh: "源代码" },
       "footer.issues":    { en: "Issues", zh: "问题反馈" },
-      "footer.twitter":   { en: "Twitter / X", zh: "Twitter / X" },
+      "footer.twitter":   { en: "Twitter / X", zh: "个人网站" },
     };
 
     function applyLocale(lang) {
