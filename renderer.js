@@ -116,11 +116,11 @@ const I18N = {
     'enc.hwAccel': '[OK] HW Accelerated: {label}',
     'enc.cpuOnly': '[INFO] {label}',
 
-    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by indie developer Kelly Peng (@kellyyuweipeng). Got feedback?',
-    'welcome.action': 'Find me on Twitter →',
+    'welcome.text': '👋 Welcome — ShrinkMaster is a free, open-source side project by indie developer Kelly Peng. Got feedback?',
+    'welcome.action': 'Visit kellypeng.com →',
 
     'footer.localOnly': '100% local · open source',
-    'footer.madeBy': 'Made by Kelly Peng (@kellyyuweipeng)',
+    'footer.madeBy': 'Made by Kelly Peng',
     'footer.star': 'Star on GitHub',
 
     'result.share': '📤 Share Result',
@@ -128,8 +128,8 @@ const I18N = {
     'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
 
     'about.greeting': "Hi, I'm Kelly 👋",
-    'about.body': "ShrinkMaster is a free, open-source side project. If it's been useful, a Star or follow on Twitter means a lot.",
-    'about.followTwitter': 'Follow @kellyyuweipeng',
+    'about.body': "ShrinkMaster is a free, open-source side project. If it's been useful, a Star on GitHub means a lot.",
+    'about.followTwitter': "More by the maker →",
     'about.star': 'Star on GitHub',
     'about.versionPrefix': 'Version',
     'about.checkUpdate': 'Check for updates',
@@ -249,11 +249,11 @@ const I18N = {
     'enc.hwAccel': '[已启用] 硬件加速：{label}',
     'enc.cpuOnly': '[提示] {label}',
 
-    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 Kelly Peng (@kellyyuweipeng) 制作的开源副业项目。有反馈或建议？',
-    'welcome.action': '在推特上找我 →',
+    'welcome.text': '👋 欢迎使用 ShrinkMaster — 由独立开发者 Kelly Peng 制作的开源副业项目。有反馈或建议？',
+    'welcome.action': '访问 kellypeng.com →',
 
     'footer.localOnly': '100% 本地 · 开源',
-    'footer.madeBy': '由 Kelly Peng (@kellyyuweipeng) 制作',
+    'footer.madeBy': '由 Kelly Peng 制作',
     'footer.star': '在 GitHub 上点 Star',
 
     'result.share': '📤 分享结果',
@@ -261,8 +261,8 @@ const I18N = {
     'share.batchTweet': 'Compressed {n} videos and saved {pct}% with ShrinkMaster — local, free, open source 📦\n\nhttps://github.com/kellypeng/shrinkmaster\n\nmade by Kelly Peng (@kellyyuweipeng)',
 
     'about.greeting': '你好，我是 Kelly 👋',
-    'about.body': 'ShrinkMaster 是我做的一个免费开源副业项目。如果它对你有用，欢迎 Star 项目或在推特上关注我。',
-    'about.followTwitter': '关注 @kellyyuweipeng',
+    'about.body': 'ShrinkMaster 是我做的一个免费开源副业项目。如果它对你有用，欢迎 Star 项目或访问我的个人网站。',
+    'about.followTwitter': '关注作者其他项目 →',
     'about.star': '给项目点 Star',
     'about.versionPrefix': '版本',
     'about.checkUpdate': '检查更新',
@@ -1202,6 +1202,7 @@ window.electronAPI.onTestAutoCompress(() => {
 // ========================
 const LINKS = {
   twitter: 'https://twitter.com/kellyyuweipeng',
+  website: 'https://kellypeng.com',
   github: 'https://github.com/kellypeng/shrinkmaster',
 };
 
@@ -1264,7 +1265,7 @@ if (welcomeBannerClose) {
 if (welcomeBannerAction) {
   welcomeBannerAction.addEventListener('click', (e) => {
     e.preventDefault();
-    openLink(LINKS.twitter);
+    openLink(LINKS.website);
     try { localStorage.setItem('shrinkmaster.welcome.dismissed', '1'); } catch (err) {}
     welcomeBanner.classList.add('hidden');
   });
